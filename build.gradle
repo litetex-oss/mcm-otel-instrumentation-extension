@@ -23,6 +23,7 @@ base {
 
 loom {
     accessWidenerPath = file("src/main/resources/ome.accesswidener")
+    log4jConfigs.from(file("src/dev/log4j2.xml"))
 }
 
 // https://github.com/gradle/gradle/issues/27035
@@ -32,12 +33,62 @@ configurations.checkstyle {
     }
 }
 
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "OSSRH Snapshots"
+                url = "https://oss.sonatype.org/content/repositories/snapshots"
+            }
+        }
+        filter {
+            includeModule('me.lucko', 'spark-api')
+        }
+    }
+    // https://support.modrinth.com/en/articles/8801191-modrinth-maven
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    // Fallback (fixes Renovate)
+    mavenCentral()
+}
+
 dependencies {
     checkstyle "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
 
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    implementation "io.opentelemetry:opentelemetry-api:1.48.0"
+    compileOnly "me.lucko:spark-api:0.1-SNAPSHOT"
+
+    // Only needed during development
+
+//    modLocalRuntime "maven.modrinth:spark:1.10.121-fabric"
+//    modLocalRuntime "net.fabricmc.fabric-api:fabric-api:0.119.2+1.21.4"
+//    modLocalRuntime "me.lucko:fabric-permissions-api:0.3.3"
+
+    // TODO Agent
+    // https://opentelemetry.io/docs/languages/java/configuration
+    // https://opentelemetry.io/docs/zero-code/java/agent/disable/#enable-manual-instrumentation-only
+    // -javaagent:opentelemetry-javaagent.jar
+    //-Dotel.metrics.exporter=console
+    //-Dotel.metric.export.interval=10000
+    //-Dotel.traces.exporter=console
+    //-Dotel.logs.exporter=none
+    //-Dotel.instrumentation.common.default-enabled=false
+    //-Dotel.instrumentation.opentelemetry-api.enabled=true
+    //-Dotel.instrumentation.opentelemetry-instrumentation-annotations.enabled=true
+    //-Dotel.java.disabled.resource.providers=io.opentelemetry.instrumentation.resources.ProcessResourceProvider
 }
 
 processResources {
