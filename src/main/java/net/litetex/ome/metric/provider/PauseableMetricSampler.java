@@ -25,14 +25,17 @@ public abstract class PauseableMetricSampler<T extends Number, M extends TypedOb
 	@Override
 	public void register(final Meter meter, final MinecraftServer server)
 	{
-		this.serverPausedSamplerCondition = new ServerPausedSamplerCondition(server);
+		this.serverPausedSamplerCondition = ome().config().getMetrics().isFreezeWhenServerPaused()
+			? new ServerPausedSamplerCondition(server)
+			: null;
 		super.register(meter, server);
 	}
 	
 	@Override
 	protected boolean shouldSample()
 	{
-		return this.serverPausedSamplerCondition.shouldSample(this.server);
+		return serverPausedSamplerCondition == null
+			|| this.serverPausedSamplerCondition.shouldSample(this.server);
 	}
 	
 	@Override

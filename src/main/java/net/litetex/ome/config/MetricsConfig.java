@@ -9,10 +9,25 @@ public class MetricsConfig
 {
 	public static final Set<String> DEFAULT_DISABLED = Set.of();
 	
+	// Stop fetching certain metrics when the server is paused and uses previously cached values
+	// This optimization usually improves the sampling speed for affected metrics by >10x
+	// Outcomes vary widely and depend on the work required for fetching
+	private boolean freezeWhenServerPaused = true;
+	
 	private String prefix = "minecraft_";
 	private Set<String> enabledOnly; // Can be null!
 	private Set<String> enabledAdditionally = new HashSet<>();
 	private Set<String> disabled = new HashSet<>();
+	
+	public void setFreezeWhenServerPaused(final boolean freezeWhenServerPaused)
+	{
+		this.freezeWhenServerPaused = freezeWhenServerPaused;
+	}
+	
+	public boolean isFreezeWhenServerPaused()
+	{
+		return this.freezeWhenServerPaused;
+	}
 	
 	public String getPrefix()
 	{
