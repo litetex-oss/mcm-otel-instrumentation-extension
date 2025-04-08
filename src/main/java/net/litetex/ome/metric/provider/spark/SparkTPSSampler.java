@@ -1,21 +1,29 @@
 package net.litetex.ome.metric.provider.spark;
 
-import io.opentelemetry.api.metrics.ObservableDoubleMeasurement;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.opentelemetry.api.common.Attributes;
 import me.lucko.spark.api.SparkProvider;
 import me.lucko.spark.api.statistic.StatisticWindow;
-import net.litetex.ome.metric.provider.AbstractMetricSampler;
+import net.litetex.ome.metric.measurement.TypedObservableDoubleMeasurement;
+import net.litetex.ome.metric.provider.CachedMetricSampler;
+import net.litetex.ome.metric.provider.PauseableMetricSampler;
 
 
-public class SparkTPSSampler extends AbstractMetricSampler<ObservableDoubleMeasurement>
+public class SparkTPSSampler extends PauseableMetricSampler<Double, TypedObservableDoubleMeasurement>
 {
 	public SparkTPSSampler()
 	{
-		super("spark_tps", AbstractMetricSampler::doubleGauge);
+		super("spark_tps", CachedMetricSampler::typedDoubleGauge);
+		this.attributeAlwaysNull = true;
 	}
 	
 	@Override
-	protected void sample(final ObservableDoubleMeasurement measurement)
+	protected Map<Attributes, Double> getSamples()
 	{
-		measurement.record(SparkProvider.get().tps().poll(StatisticWindow.TicksPerSecond.MINUTES_1));
+		final Map<Attributes, Double> map = new HashMap<>();
+		map.put(null, SparkProvider.get().tps().poll(StatisticWindow.TicksPerSecond.MINUTES_1));
+		return map;
 	}
 }

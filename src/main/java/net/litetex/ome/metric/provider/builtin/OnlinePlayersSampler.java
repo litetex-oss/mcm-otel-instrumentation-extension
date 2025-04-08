@@ -1,8 +1,8 @@
 package net.litetex.ome.metric.provider.builtin;
 
-import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.ObservableLongMeasurement;
+import net.litetex.ome.metric.CommonAttributeKeys;
 import net.litetex.ome.metric.provider.AbstractMetricSampler;
 import net.minecraft.server.world.ServerWorld;
 
@@ -22,7 +22,7 @@ public class OnlinePlayersSampler extends AbstractMetricSampler<ObservableLongMe
 			measurement.record(
 				world.getPlayers().size(),
 				Attributes.of(
-					AttributeKey.stringKey("world"),
+					CommonAttributeKeys.WORLD,
 					this.ome().formatWorldName(world)));
 		}
 	}

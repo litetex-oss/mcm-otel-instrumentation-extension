@@ -1,8 +1,8 @@
 package net.litetex.ome.metric.provider.builtin;
 
-import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.ObservableLongMeasurement;
+import net.litetex.ome.metric.CommonAttributeKeys;
 import net.litetex.ome.metric.provider.AbstractMetricSampler;
 
 
@@ -18,6 +18,6 @@ public class NetworkConnectionsSampler extends AbstractMetricSampler<ObservableL
 	{
 		measurement.record(
 			this.server.getNetworkIo().getConnections().size(),
-			Attributes.of(AttributeKey.stringKey("variant"), "current"));
+			Attributes.of(CommonAttributeKeys.VARIANT, "current"));
 	}
 }

@@ -73,9 +73,9 @@ dependencies {
 
     // Only needed during development
 
-//    modLocalRuntime "maven.modrinth:spark:1.10.121-fabric"
-//    modLocalRuntime "net.fabricmc.fabric-api:fabric-api:0.119.2+1.21.4"
-//    modLocalRuntime "me.lucko:fabric-permissions-api:0.3.3"
+    modLocalRuntime "maven.modrinth:spark:1.10.121-fabric"
+    modLocalRuntime "net.fabricmc.fabric-api:fabric-api:0.119.2+1.21.4"
+    modLocalRuntime "me.lucko:fabric-permissions-api:0.3.3"
 
     // TODO Agent
     // https://opentelemetry.io/docs/languages/java/configuration

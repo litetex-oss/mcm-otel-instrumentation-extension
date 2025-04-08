@@ -1,8 +1,8 @@
 package net.litetex.ome.metric.provider.builtin;
 
-import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.ObservableDoubleMeasurement;
+import net.litetex.ome.metric.CommonAttributeKeys;
 import net.litetex.ome.metric.provider.AbstractMetricSampler;
 import net.minecraft.network.ClientConnection;
 
@@ -21,6 +21,6 @@ public class NetworkConnectionsAvgPacketsSentSampler extends AbstractMetricSampl
 			this.server.getNetworkIo().getConnections().stream()
 				.mapToDouble(ClientConnection::getAveragePacketsSent)
 				.sum(),
-			Attributes.of(AttributeKey.stringKey("variant"), "average"));
+			Attributes.of(CommonAttributeKeys.VARIANT, "average"));
 	}
 }
