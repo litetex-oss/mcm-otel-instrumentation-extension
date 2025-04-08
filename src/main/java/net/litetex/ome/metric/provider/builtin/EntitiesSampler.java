@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.ObservableLongMeasurement;
@@ -14,26 +15,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypeFilter;
 import net.minecraft.world.World;
 
 
 public class EntitiesSampler extends AbstractMetricSampler<ObservableLongMeasurement>
 {
-	private static final TypeFilter<Entity, ?> ENTITY_FILTER = new TypeFilter<>()
-	{
-		@Override
-		public Entity downcast(final Entity entity)
-		{
-			return entity;
-		}
-		
-		@Override
-		public Class<? extends Entity> getBaseClass()
-		{
-			return Entity.class;
-		}
-	};
 	private final Map<EntityType<?>, Identifier> cachedEntityTypeIds = new WeakHashMap<>();
 	private final Map<World, Set<EntityType<?>>> previousWorldEntityTypes = new WeakHashMap<>();
 	
@@ -49,10 +35,8 @@ public class EntitiesSampler extends AbstractMetricSampler<ObservableLongMeasure
 		{
 			final String formattedWorldName = this.ome().formatWorldName(world);
 			
-			// TODO: Optimize
 			final Map<EntityType<?>, ? extends List<?>> currentEntities =
-				world.getEntitiesByType(ENTITY_FILTER, entity -> true)
-					.stream()
+				StreamSupport.stream(world.getEntityLookup().iterate().spliterator(), false)
 					.collect(Collectors.groupingBy(Entity::getType));
 			currentEntities
 				.forEach((type, entities) -> this.measure(measurement, type, entities.size(), formattedWorldName));
