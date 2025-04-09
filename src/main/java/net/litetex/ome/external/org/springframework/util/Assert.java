@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.litetex.external.org.springframework.util;
+package net.litetex.ome.external.org.springframework.util;
 
 /**
  * Assertion utility class that assists in validating arguments.

@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.opentelemetry.api.metrics.Meter;
-import net.litetex.external.org.springframework.util.ConcurrentReferenceHashMap;
 import net.litetex.ome.config.Config;
+import net.litetex.ome.external.org.springframework.util.ConcurrentReferenceHashMap;
 import net.litetex.ome.metric.provider.MetricSampler;
 import net.litetex.ome.metric.provider.SamplerProvider;
 import net.minecraft.server.MinecraftServer;

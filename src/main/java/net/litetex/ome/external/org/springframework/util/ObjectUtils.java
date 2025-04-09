@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.litetex.external.org.springframework.util;
+package net.litetex.ome.external.org.springframework.util;
 
 import java.util.Arrays;
 
