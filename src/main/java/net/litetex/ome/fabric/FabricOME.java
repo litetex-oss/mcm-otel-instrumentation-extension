@@ -36,7 +36,7 @@ public class FabricOME implements ModInitializer
 	
 	private Path configFilePath()
 	{
-		return FabricLoader.getInstance().getConfigDir().resolve("ome.json5");
+		return FabricLoader.getInstance().getConfigDir().resolve("ome.json");
 	}
 	
 	private Config loadConfig()
