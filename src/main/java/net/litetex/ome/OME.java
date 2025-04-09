@@ -93,7 +93,7 @@ public class OME
 			}
 			
 		});
-		thread.setName("Minecraft-OpenTelemetry-Sampler-Bootstrap");
+		thread.setName("Minecraft-OpenTelemetry-Bootstrap");
 		thread.setDaemon(true);
 		thread.start();
 	}
