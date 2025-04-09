@@ -10,12 +10,12 @@ import net.litetex.ome.metric.measurement.TypedObservableMeasurement;
 import net.minecraft.server.MinecraftServer;
 
 
-public abstract class PauseableNullSettingMetricSampler<T extends Number, M extends TypedObservableMeasurement<T>>
-	extends CachedNullSettingMetricSampler<T, M>
+public abstract class PausableMetricSampler<T extends Number, M extends TypedObservableMeasurement<T>>
+	extends CachedMetricSampler<T, M>
 {
 	protected ServerPausedSamplerCondition serverPausedSamplerCondition;
 	
-	protected PauseableNullSettingMetricSampler(
+	protected PausableMetricSampler(
 		final String name,
 		final TriFunction<Meter, String, Consumer<M>, AutoCloseable> buildWithCallback)
 	{

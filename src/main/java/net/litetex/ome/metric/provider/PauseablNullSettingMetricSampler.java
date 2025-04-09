@@ -10,12 +10,12 @@ import net.litetex.ome.metric.measurement.TypedObservableMeasurement;
 import net.minecraft.server.MinecraftServer;
 
 
-public abstract class PauseableMetricSampler<T extends Number, M extends TypedObservableMeasurement<T>>
-	extends CachedMetricSampler<T, M>
+public abstract class PauseablNullSettingMetricSampler<T extends Number, M extends TypedObservableMeasurement<T>>
+	extends CachedNullSettingMetricSampler<T, M>
 {
 	protected ServerPausedSamplerCondition serverPausedSamplerCondition;
 	
-	protected PauseableMetricSampler(
+	protected PauseablNullSettingMetricSampler(
 		final String name,
 		final TriFunction<Meter, String, Consumer<M>, AutoCloseable> buildWithCallback)
 	{
@@ -25,7 +25,7 @@ public abstract class PauseableMetricSampler<T extends Number, M extends TypedOb
 	@Override
 	public void register(final Meter meter, final MinecraftServer server)
 	{
-		this.serverPausedSamplerCondition = ome().config().getMetrics().isFreezeWhenServerPaused()
+		this.serverPausedSamplerCondition = this.ome().config().getMetrics().isFreezeWhenServerPaused()
 			? new ServerPausedSamplerCondition(server)
 			: null;
 		super.register(meter, server);
@@ -34,7 +34,7 @@ public abstract class PauseableMetricSampler<T extends Number, M extends TypedOb
 	@Override
 	protected boolean shouldSample()
 	{
-		return serverPausedSamplerCondition == null
+		return this.serverPausedSamplerCondition == null
 			|| this.serverPausedSamplerCondition.shouldSample(this.server);
 	}
 	

@@ -8,10 +8,10 @@ import me.lucko.spark.api.SparkProvider;
 import me.lucko.spark.api.statistic.StatisticWindow;
 import net.litetex.ome.metric.measurement.TypedObservableDoubleMeasurement;
 import net.litetex.ome.metric.provider.CachedMetricSampler;
-import net.litetex.ome.metric.provider.PauseableMetricSampler;
+import net.litetex.ome.metric.provider.PausableMetricSampler;
 
 
-public class SparkTPSSampler extends PauseableMetricSampler<Double, TypedObservableDoubleMeasurement>
+public class SparkTPSSampler extends PausableMetricSampler<Double, TypedObservableDoubleMeasurement>
 {
 	public SparkTPSSampler()
 	{

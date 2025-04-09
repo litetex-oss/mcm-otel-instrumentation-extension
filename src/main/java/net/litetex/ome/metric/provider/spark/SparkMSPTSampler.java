@@ -10,10 +10,10 @@ import me.lucko.spark.api.statistic.misc.DoubleAverageInfo;
 import net.litetex.ome.metric.CommonAttributeKeys;
 import net.litetex.ome.metric.measurement.TypedObservableDoubleMeasurement;
 import net.litetex.ome.metric.provider.CachedMetricSampler;
-import net.litetex.ome.metric.provider.PauseableMetricSampler;
+import net.litetex.ome.metric.provider.PausableMetricSampler;
 
 
-public class SparkMSPTSampler extends PauseableMetricSampler<Double, TypedObservableDoubleMeasurement>
+public class SparkMSPTSampler extends PausableMetricSampler<Double, TypedObservableDoubleMeasurement>
 {
 	public SparkMSPTSampler()
 	{

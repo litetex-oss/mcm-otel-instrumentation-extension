@@ -20,15 +20,20 @@ public abstract class CachedNullSettingMetricSampler<T extends Number, M extends
 		super(name, buildWithCallback);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onSampled(final Map<Attributes, T> samples, final M measurement)
 	{
 		this.cachedSamples.keySet()
 			.stream()
 			.filter(attr -> !samples.containsKey(attr))
-			.forEach(attr -> this.record(measurement, (T)(Object)0, attr));
+			.forEach(attr -> this.handlePreviousRemoved(measurement, attr));
 		
 		this.cachedSamples = samples;
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void handlePreviousRemoved(final M measurement, final Attributes attr)
+	{
+		this.record(measurement, (T)(Object)0, attr);
 	}
 }

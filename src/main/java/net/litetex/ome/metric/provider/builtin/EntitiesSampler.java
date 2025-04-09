@@ -8,14 +8,14 @@ import java.util.stream.StreamSupport;
 import io.opentelemetry.api.common.Attributes;
 import net.litetex.ome.metric.measurement.TypedObservableLongMeasurement;
 import net.litetex.ome.metric.provider.CachedMetricSampler;
-import net.litetex.ome.metric.provider.PauseableNullSettingMetricSampler;
+import net.litetex.ome.metric.provider.PauseablNullSettingMetricSampler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 
-public class EntitiesSampler extends PauseableNullSettingMetricSampler<Long, TypedObservableLongMeasurement>
+public class EntitiesSampler extends PauseablNullSettingMetricSampler<Long, TypedObservableLongMeasurement>
 {
 	private final Map<EntityType<?>, Identifier> cachedEntityTypeIds = new WeakHashMap<>();
 	
