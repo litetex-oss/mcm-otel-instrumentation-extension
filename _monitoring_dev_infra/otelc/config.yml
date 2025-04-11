@@ -22,7 +22,7 @@ exporters:
     headers:
       "X-Scope-OrgID": local
   otlphttp:
-    endpoint: http://loki-write:3100/otlp
+    endpoint: http://loki:3100/otlp
     compression: none # Compression is not needed for internal network communication
     tls:
       insecure: true
