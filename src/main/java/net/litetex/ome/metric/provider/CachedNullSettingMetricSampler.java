@@ -13,11 +13,15 @@ import net.litetex.ome.metric.measurement.TypedObservableMeasurement;
 public abstract class CachedNullSettingMetricSampler<T extends Number, M extends TypedObservableMeasurement<T>>
 	extends CachedMetricSampler<T, M>
 {
+	protected final T metricRemovedValue;
+	
 	protected CachedNullSettingMetricSampler(
 		final String name,
-		final TriFunction<Meter, String, Consumer<M>, AutoCloseable> buildWithCallback)
+		final TriFunction<Meter, String, Consumer<M>, AutoCloseable> buildWithCallback,
+		final T metricRemovedValue)
 	{
 		super(name, buildWithCallback);
+		this.metricRemovedValue = metricRemovedValue;
 	}
 	
 	@Override
@@ -31,9 +35,8 @@ public abstract class CachedNullSettingMetricSampler<T extends Number, M extends
 		this.cachedSamples = samples;
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected void handlePreviousRemoved(final M measurement, final Attributes attr)
 	{
-		this.record(measurement, (T)(Object)0, attr);
+		this.record(measurement, this.metricRemovedValue, attr);
 	}
 }

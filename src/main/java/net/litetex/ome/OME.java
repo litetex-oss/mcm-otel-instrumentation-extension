@@ -7,6 +7,7 @@ import java.util.ServiceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.opentelemetry.api.metrics.LongGauge;
 import io.opentelemetry.api.metrics.Meter;
 import net.litetex.ome.config.Config;
 import net.litetex.ome.external.org.springframework.util.ConcurrentReferenceHashMap;
@@ -23,20 +24,11 @@ public class OME
 	
 	private static OME instance;
 	
-	public static OME instance()
-	{
-		return instance;
-	}
-	
-	public static void setInstance(final OME instance)
-	{
-		OME.instance = instance;
-	}
-	
 	private final Config config;
 	private final OMEMetricsCreator metricsCreator;
 	
 	private List<MetricSampler> registeredSamplers;
+	private LongGauge up;
 	
 	public OME(final Config config)
 	{
@@ -92,6 +84,8 @@ public class OME
 						.toList());
 			}
 			
+			this.up = this.metricsCreator().createLongGauge("up");
+			this.up.set(1);
 		});
 		thread.setName("Minecraft-OpenTelemetry-Bootstrap");
 		thread.setDaemon(true);
@@ -104,6 +98,12 @@ public class OME
 		
 		this.registeredSamplers.forEach(MetricSampler::close);
 		this.registeredSamplers.clear();
+		
+		if(this.up != null)
+		{
+			this.up.set(0);
+			this.up = null;
+		}
 	}
 	
 	private final Map<Identifier, String> formatCache = new ConcurrentReferenceHashMap<>(
@@ -122,5 +122,15 @@ public class OME
 	public String formatWorldName(final ServerWorld world)
 	{
 		return this.formatIdentifier(world.getRegistryKey().getValue());
+	}
+	
+	public static OME instance()
+	{
+		return instance;
+	}
+	
+	public static void setInstance(final OME instance)
+	{
+		OME.instance = instance;
 	}
 }

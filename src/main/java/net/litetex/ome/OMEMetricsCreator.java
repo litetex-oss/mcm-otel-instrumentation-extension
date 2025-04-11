@@ -43,7 +43,7 @@ public class OMEMetricsCreator
 	
 	public boolean isMetricActive(final String name)
 	{
-		if(this.metricsConfig.getEnabledOnly() != null)
+		if(!this.metricsConfig.getEnabledOnly().isEmpty())
 		{
 			return this.metricsConfig.getEnabledOnly().contains(name);
 		}

@@ -10,9 +10,9 @@ public class ServerPausedSamplerCondition
 	private boolean wasRunning = true;
 	private final int pauseWhenEmptyTicks;
 	
-	public ServerPausedSamplerCondition(final MinecraftServer server)
+	protected ServerPausedSamplerCondition(final int pauseWhenEmptyTicks)
 	{
-		this.pauseWhenEmptyTicks = server.getPauseWhenEmptySeconds() * TPS;
+		this.pauseWhenEmptyTicks = pauseWhenEmptyTicks;
 	}
 	
 	public boolean shouldSample(final MinecraftServer server)
@@ -21,5 +21,15 @@ public class ServerPausedSamplerCondition
 		final boolean wasRunningBefore = this.wasRunning;
 		this.wasRunning = isRunning;
 		return isRunning || wasRunningBefore;
+	}
+	
+	public static ServerPausedSamplerCondition create(final MinecraftServer server)
+	{
+		if(server.getPauseWhenEmptySeconds() <= 0)
+		{
+			return null;
+		}
+		
+		return new ServerPausedSamplerCondition(server.getPauseWhenEmptySeconds() * TPS);
 	}
 }
