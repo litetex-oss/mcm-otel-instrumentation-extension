@@ -15,13 +15,13 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 
-public class EntitiesSampler extends PausableNullSettingMetricSampler<Long, TypedObservableLongMeasurement>
+public class LoadedEntitiesSampler extends PausableNullSettingMetricSampler<Long, TypedObservableLongMeasurement>
 {
 	private final Map<EntityType<?>, Identifier> cachedEntityTypeIds = new WeakHashMap<>();
 	
-	public EntitiesSampler()
+	public LoadedEntitiesSampler()
 	{
-		super("entities", CachedMetricSampler::typedLongGauge, 0L);
+		super("loaded_entities", CachedMetricSampler::typedLongGauge, 0L);
 	}
 	
 	@Override

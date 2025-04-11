@@ -39,7 +39,7 @@ public abstract class AbstractMetricSampler<M extends ObservableMeasurement> imp
 		final String name,
 		final Consumer<ObservableDoubleMeasurement> c)
 	{
-		return meter.gaugeBuilder(name).buildWithCallback(c);
+		return meter.gaugeBuilder(buildMetricName(name)).buildWithCallback(c);
 	}
 	
 	protected static AutoCloseable longGauge(
@@ -47,7 +47,7 @@ public abstract class AbstractMetricSampler<M extends ObservableMeasurement> imp
 		final String name,
 		final Consumer<ObservableLongMeasurement> c)
 	{
-		return meter.gaugeBuilder(name).ofLongs().buildWithCallback(c);
+		return meter.gaugeBuilder(buildMetricName(name)).ofLongs().buildWithCallback(c);
 	}
 	
 	protected static AutoCloseable longCounter(
@@ -55,7 +55,12 @@ public abstract class AbstractMetricSampler<M extends ObservableMeasurement> imp
 		final String name,
 		final Consumer<ObservableLongMeasurement> c)
 	{
-		return meter.counterBuilder(name).buildWithCallback(c);
+		return meter.counterBuilder(buildMetricName(name)).buildWithCallback(c);
+	}
+	
+	protected static String buildMetricName(final String name)
+	{
+		return OME.instance().config().getMetrics().getPrefix() + name;
 	}
 	
 	protected OME ome()

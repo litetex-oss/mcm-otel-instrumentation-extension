@@ -13,7 +13,7 @@ public class BuiltinSamplerProvider implements SamplerProvider
 	{
 		return Set.of(
 			new AverageTickTimeSampler(),
-			new EntitiesSampler(),
+			new LoadedEntitiesSampler(),
 			new LoadedChunksSampler(),
 			new NetworkConnectionsAvgPacketsReceivedSampler(),
 			new NetworkConnectionsAvgPacketsSentSampler(),

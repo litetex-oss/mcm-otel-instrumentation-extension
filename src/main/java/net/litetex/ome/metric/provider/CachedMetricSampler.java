@@ -31,8 +31,8 @@ public abstract class CachedMetricSampler<T extends Number, M extends TypedObser
 		final String name,
 		final Consumer<TypedObservableDoubleMeasurement> c)
 	{
-		return meter.gaugeBuilder(name).buildWithCallback(m ->
-			c.accept(new TypedObservableDoubleMeasurement(m)));
+		return meter.gaugeBuilder(buildMetricName(name))
+			.buildWithCallback(m -> c.accept(new TypedObservableDoubleMeasurement(m)));
 	}
 	
 	protected static AutoCloseable typedLongGauge(
@@ -40,10 +40,9 @@ public abstract class CachedMetricSampler<T extends Number, M extends TypedObser
 		final String name,
 		final Consumer<TypedObservableLongMeasurement> c)
 	{
-		return meter.gaugeBuilder(name)
+		return meter.gaugeBuilder(buildMetricName(name))
 			.ofLongs()
-			.buildWithCallback(m ->
-				c.accept(new TypedObservableLongMeasurement(m)));
+			.buildWithCallback(m -> c.accept(new TypedObservableLongMeasurement(m)));
 	}
 	
 	protected static AutoCloseable typedLongCounter(
@@ -51,8 +50,8 @@ public abstract class CachedMetricSampler<T extends Number, M extends TypedObser
 		final String name,
 		final Consumer<TypedObservableLongMeasurement> c)
 	{
-		return meter.counterBuilder(name).buildWithCallback(m ->
-			c.accept(new TypedObservableLongMeasurement(m)));
+		return meter.counterBuilder(buildMetricName(name))
+			.buildWithCallback(m -> c.accept(new TypedObservableLongMeasurement(m)));
 	}
 	
 	protected abstract boolean shouldSample();
