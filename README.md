@@ -14,6 +14,15 @@ This mod provides additional instrumentation for the [OpenTelemetry JavaAgent](h
 
 <!-- modrinth_exclude.start -->
 
+## Demo for development
+
+* Make sure that you have Docker and IntelliJ installed
+* Checkout the repository
+* [Download](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases) the OpenTelemetry JavaAgent and put it into the ``run`` folder
+* Go into [``_monitoring_dev_infra``](./_monitoring_dev_infra/) and start it with ``docker compose up``
+* Log in to Grafana at [``localhost:3000``](http://localhost:3000) (username and password are ``admin``)
+* Open IntelliJ and run the ``Minecraft Server (OTEL-AGENT)`` launcher
+
 ## Installation
 [Installation guide for the latest release](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/releases/latest#Installation)
 
