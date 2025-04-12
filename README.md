@@ -16,7 +16,7 @@ This mod provides additional instrumentation for the [OpenTelemetry JavaAgent](h
 
 The default configuration of the mod should usually work out of the box.<br/>
 If you wish to customize it, open ``config/oie.json`` and tune the corresponding values.<br/>
-Further documentation can be found directly inside the corresponding [Java-Source Code](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/src/main/java/net/litetex/oie/config/).
+Further documentation can be found directly inside the corresponding [Java Code](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/src/main/java/net/litetex/oie/config/).
 
 ## How does the overall setup work?
 
