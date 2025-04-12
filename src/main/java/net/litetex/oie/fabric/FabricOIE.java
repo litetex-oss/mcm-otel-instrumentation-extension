@@ -36,7 +36,7 @@ public class FabricOIE implements ModInitializer
 	
 	private Path configFilePath()
 	{
-		return FabricLoader.getInstance().getConfigDir().resolve("ome.json");
+		return FabricLoader.getInstance().getConfigDir().resolve("oie.json");
 	}
 	
 	private Config loadConfig()
