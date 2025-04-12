@@ -22,7 +22,7 @@
       }
     ]
   },
-  "description": "OpenTelemetry Java Agent",
+  "description": "OpenTelemetry Java Agent Instrumentation for Minecraft\nSee also: https://github.com/litetex-oss/mcm-otel-instrumentation-extension",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
@@ -2662,7 +2662,7 @@
       {
         "auto": true,
         "auto_count": 300,
-        "auto_min": "30s",
+        "auto_min": "10s",
         "current": {
           "text": "$__auto",
           "value": "$__auto"
@@ -2715,5 +2715,5 @@
   "timezone": "browser",
   "title": "OTEL Minecraft",
   "uid": "otel-minecraft",
-  "version": 1
+  "version": 5
 }
