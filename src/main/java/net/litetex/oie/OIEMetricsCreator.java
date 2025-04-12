@@ -22,18 +22,18 @@ public class OIEMetricsCreator
 {
 	private static final Logger LOG = LoggerFactory.getLogger(OIEMetricsCreator.class);
 	
-	private final OIE OIE;
+	private final OIE oie;
 	private final MetricsConfig metricsConfig;
 	
-	public OIEMetricsCreator(final OIE OIE)
+	public OIEMetricsCreator(final OIE oie)
 	{
-		this.OIE = OIE;
-		this.metricsConfig = OIE.config().getMetrics();
+		this.oie = oie;
+		this.metricsConfig = oie.config().getMetrics();
 	}
 	
 	public Meter getMeter()
 	{
-		return GlobalOpenTelemetry.getMeter(this.OIE.instrumentationName());
+		return GlobalOpenTelemetry.getMeter(this.oie.instrumentationName());
 	}
 	
 	protected String createMetricName(final String name)
