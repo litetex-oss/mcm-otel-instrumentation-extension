@@ -26,22 +26,9 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 2,
+  "id": 1,
   "links": [],
   "panels": [
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 35,
-      "panels": [],
-      "title": "Row title",
-      "type": "row"
-    },
     {
       "datasource": {
         "type": "prometheus",
@@ -70,7 +57,7 @@
         "h": 5,
         "w": 4,
         "x": 0,
-        "y": 1
+        "y": 0
       },
       "id": 21,
       "options": {
@@ -146,7 +133,7 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 1
+        "y": 0
       },
       "id": 19,
       "options": {
@@ -219,7 +206,7 @@
         "h": 5,
         "w": 4,
         "x": 8,
-        "y": 1
+        "y": 0
       },
       "id": 18,
       "options": {
@@ -286,7 +273,7 @@
         "h": 5,
         "w": 4,
         "x": 12,
-        "y": 1
+        "y": 0
       },
       "id": 22,
       "options": {
@@ -352,7 +339,7 @@
         "h": 5,
         "w": 4,
         "x": 16,
-        "y": 1
+        "y": 0
       },
       "id": 23,
       "options": {
@@ -434,7 +421,7 @@
         "h": 5,
         "w": 4,
         "x": 20,
-        "y": 1
+        "y": 0
       },
       "id": 27,
       "options": {
@@ -543,7 +530,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 5
       },
       "id": 1,
       "options": {
@@ -663,7 +650,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 5
       },
       "id": 20,
       "options": {
@@ -721,7 +708,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 12
       },
       "id": 32,
       "panels": [],
@@ -786,10 +773,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
+        "h": 5,
+        "w": 12,
         "x": 0,
-        "y": 14
+        "y": 13
       },
       "id": 24,
       "options": {
@@ -886,10 +873,111 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 8,
-        "y": 14
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 41,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "increase(minecraft_handshakes_total{instance=~\"$instance\",job=~\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "$minstep",
+          "legendFormat": "{{intent}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Handshakes [inc]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "linearThreshold": 50,
+              "log": 2,
+              "type": "symlog"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 18
       },
       "id": 25,
       "options": {
@@ -961,7 +1049,8 @@
             "pointSize": 5,
             "scaleDistribution": {
               "linearThreshold": 50,
-              "type": "linear"
+              "log": 2,
+              "type": "symlog"
             },
             "showPoints": "auto",
             "spanNulls": false,
@@ -986,10 +1075,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 16,
-        "y": 14
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 18
       },
       "id": 26,
       "options": {
@@ -1034,7 +1123,325 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 23
+      },
+      "id": 45,
+      "panels": [],
+      "title": "Chunk Generation Steps",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "linearThreshold": 50,
+              "log": 2,
+              "type": "symlog"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 42,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "increase(minecraft_chunk_generation_step_count_total{instance=~\"$instance\",job=~\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "$minstep",
+          "legendFormat": "{{status_index}} {{status}} - {{world}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Invoked count [inc]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "linearThreshold": 50,
+              "log": 2,
+              "type": "symlog"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 43,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "increase(minecraft_chunk_generation_step_duration_ms_total{instance=~\"$instance\",job=~\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "$minstep",
+          "legendFormat": "{{status_index}} {{status}} - {{world}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Execution time [inc]",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "linearThreshold": 50,
+              "log": 2,
+              "type": "symlog"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "id": 44,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "increase(minecraft_chunk_generation_step_duration_ms_total{instance=~\"$instance\",job=~\"$job\"}[$__rate_interval]) / increase(minecraft_chunk_generation_step_count_total{instance=~\"$instance\",job=~\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "$minstep",
+          "legendFormat": "{{status_index}} {{status}} - {{world}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Average execution time [inc]",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 44
       },
       "id": 34,
       "panels": [],
@@ -1068,7 +1475,7 @@
         "h": 14,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 45
       },
       "id": 28,
       "options": {
@@ -1175,7 +1582,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 21
+        "y": 45
       },
       "id": 30,
       "options": {
@@ -1277,7 +1684,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 28
+        "y": 52
       },
       "id": 31,
       "options": {
@@ -1379,7 +1786,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 59
       },
       "id": 29,
       "options": {
@@ -1424,7 +1831,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 71
       },
       "id": 36,
       "panels": [],
@@ -1492,7 +1899,7 @@
         "h": 5,
         "w": 12,
         "x": 0,
-        "y": 48
+        "y": 72
       },
       "id": 37,
       "options": {
@@ -1592,7 +1999,7 @@
         "h": 5,
         "w": 12,
         "x": 12,
-        "y": 48
+        "y": 72
       },
       "id": 38,
       "options": {
@@ -1693,7 +2100,7 @@
         "h": 5,
         "w": 12,
         "x": 0,
-        "y": 53
+        "y": 77
       },
       "id": 39,
       "options": {
@@ -1794,7 +2201,7 @@
         "h": 5,
         "w": 12,
         "x": 12,
-        "y": 53
+        "y": 77
       },
       "id": 40,
       "options": {
@@ -1839,11 +2246,11 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 58
+        "y": 82
       },
       "id": 13,
       "panels": [],
-      "title": "JVM Meta",
+      "title": "Meta",
       "type": "row"
     },
     {
@@ -1905,7 +2312,7 @@
         "h": 4,
         "w": 12,
         "x": 0,
-        "y": 59
+        "y": 83
       },
       "id": 10,
       "options": {
@@ -1945,12 +2352,124 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 83
+      },
+      "id": 46,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "sum by (minecraft_version) (minecraft_up{instance=~\"$instance\",job=~\"$job\"})",
+          "format": "time_series",
+          "interval": "$minstep",
+          "legendFormat": "minecraft - {{minecraft_version}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir"
+          },
+          "editorMode": "code",
+          "expr": "sum by (mod_loader_name, mod_loader_version) (minecraft_up{instance=~\"$instance\",job=~\"$job\"})",
+          "format": "time_series",
+          "hide": false,
+          "interval": "$minstep",
+          "legendFormat": "{{mod_loader_name}} - {{mod_loader_version}}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Game/Loader",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 63
+        "y": 87
       },
       "id": 12,
       "panels": [],
@@ -2016,7 +2535,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 64
+        "y": 88
       },
       "id": 11,
       "options": {
@@ -2172,7 +2691,7 @@
             "value": "10m"
           }
         ],
-        "query": "30s,1m,5m,10m",
+        "query": "10s,30s,1m,5m,10m",
         "refresh": 2,
         "type": "interval"
       }
