@@ -4,11 +4,13 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/litetex-oss/mcm-otel-monitoring-extension/check-build.yml?branch=dev)](https://github.com/litetex-oss/mcm-otel-monitoring-extension/actions/workflows/check-build.yml?query=branch%3Adev)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=litetex-oss_mcm-otel-monitoring-extension&metric=alert_status)](https://sonarcloud.io/dashboard?id=litetex-oss_mcm-otel-monitoring-extension)
 
-# mcm-otel-monitoring-extension
+# OpenTelemetry Instrumentation Extension for Minecraft (Fabric)
 
 <!-- modrinth_exclude.end -->
 
-TODO
+OpenTelemetry can be used to [report various monitoring data (including metrics, logs and traces)](https://opentelemetry.io/docs/what-is-opentelemetry/) and is a de-facto industry standard.
+
+This mod provides additional instrumentation for the [OpenTelemetry JavaAgent](https://opentelemetry.io/docs/zero-code/java/agent/) so that various game metrics can be reported. The overall functionality is similar to [``fabric-exporter``](https://github.com/ruscalworld/fabric-exporter).
 
 <!-- modrinth_exclude.start -->
 
@@ -28,6 +30,11 @@ dependencies {
 > [!NOTE]
 > The contents are hosted on [Maven Central](https://repo.maven.apache.org/maven2/net/litetex/mcm/). You shouldn't have to change anything as this is the default maven repo.<br/>
 > If this somehow shouldn't work you can also try [Modrinth Maven](https://support.modrinth.com/en/articles/8801191-modrinth-maven).
+
+## Related documentation
+* [OTEL - Extending instrumentations with the API](https://opentelemetry.io/docs/zero-code/java/agent/api/)
+* [OTEL - SDK configuration](https://opentelemetry.io/docs/languages/java/configuration)
+* [OTEL - Disable default instrumentation](https://opentelemetry.io/docs/zero-code/java/agent/disable/#enable-manual-instrumentation-only)
 
 ## Contributing
 See the [contributing guide](./CONTRIBUTING.md) for detailed instructions on how to get started with our project.
