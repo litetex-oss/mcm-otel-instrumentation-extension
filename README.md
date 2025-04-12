@@ -12,6 +12,10 @@ OpenTelemetry can be used to [report various monitoring data (including metrics,
 
 This mod provides additional instrumentation for the [OpenTelemetry JavaAgent](https://opentelemetry.io/docs/zero-code/java/agent/) so that various game metrics can be reported. The overall functionality is similar to [``fabric-exporter``](https://github.com/ruscalworld/fabric-exporter).
 
+## How does the overall setup work?
+
+![Infra Overview](./assets/InfraOverview.svg)
+
 <!-- modrinth_exclude.start -->
 
 ## Demo for development
