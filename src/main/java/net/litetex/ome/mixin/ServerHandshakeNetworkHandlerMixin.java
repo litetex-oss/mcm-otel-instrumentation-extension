@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
-import net.litetex.ome.OME;
+import net.litetex.ome.OMECustomMetricInitializer;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
 import net.minecraft.server.MinecraftServer;
@@ -17,15 +17,19 @@ import net.minecraft.server.network.ServerHandshakeNetworkHandler;
 
 
 @Mixin(ServerHandshakeNetworkHandler.class)
-public class ServerHandshakeNetworkHandlerMixin
+public abstract class ServerHandshakeNetworkHandlerMixin
 {
+	@Unique
+	private static final AttributeKey<String> INTENT = AttributeKey.stringKey("intent");
+	
 	@Unique
 	private LongCounter counter;
 	
 	@Inject(method = "<init>", at = @At("RETURN"))
 	public void init(final MinecraftServer server, final ClientConnection connection, final CallbackInfo ci)
 	{
-		this.counter = OME.instance().metricsCreator().createLongCounter("handshakes");
+		OMECustomMetricInitializer.executeWhenReady(creator ->
+			this.counter = creator.createLongCounter("handshakes"));
 	}
 	
 	@Inject(method = "onHandshake", at = @At("HEAD"))
@@ -36,7 +40,7 @@ public class ServerHandshakeNetworkHandlerMixin
 			this.counter.add(
 				1,
 				Attributes.of(
-					AttributeKey.stringKey("intent"),
+					INTENT,
 					packet.intendedState().name().toLowerCase()));
 		}
 	}

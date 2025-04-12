@@ -4,6 +4,7 @@
   "package": "net.litetex.ome.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ChunkGenerationStepMixin",
     "MinecraftServerStartStopMixin",
     "ServerHandshakeNetworkHandlerMixin"
   ],

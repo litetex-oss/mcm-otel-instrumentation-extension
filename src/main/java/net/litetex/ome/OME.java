@@ -7,12 +7,19 @@ import java.util.ServiceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.opentelemetry.api.common.AttributeKey;
+import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongGauge;
 import io.opentelemetry.api.metrics.Meter;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.api.Version;
+import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.litetex.ome.config.Config;
 import net.litetex.ome.external.org.springframework.util.ConcurrentReferenceHashMap;
 import net.litetex.ome.metric.provider.MetricSampler;
 import net.litetex.ome.metric.provider.SamplerProvider;
+import net.minecraft.SharedConstants;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -85,7 +92,28 @@ public class OME
 			}
 			
 			this.up = this.metricsCreator().createLongGauge("up");
-			this.up.set(1);
+			this.up.set(
+				1,
+				Attributes.builder()
+					.put(
+						AttributeKey.stringKey("minecraft_version"),
+						SharedConstants.getGameVersion().getName())
+					.put(
+						AttributeKey.stringKey("mod_loader_name"),
+						"fabric")
+					.put(
+						AttributeKey.stringKey("mod_loader_version"),
+						FabricLoader.getInstance()
+							.getModContainer("fabricloader")
+							.map(ModContainer::getMetadata)
+							.map(ModMetadata::getVersion)
+							.map(Version::getFriendlyString)
+							.orElse("unknown"))
+					.build());
+			
+			OMECustomMetricInitializer.invokeReady(this.metricsCreator());
+			
+			LOG.debug("Finished bootstrapping, took {}ms", System.currentTimeMillis() - start);
 		});
 		thread.setName("Minecraft-OpenTelemetry-Bootstrap");
 		thread.setDaemon(true);

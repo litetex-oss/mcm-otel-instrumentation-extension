@@ -12,7 +12,7 @@ import net.minecraft.server.MinecraftServer;
 // See also:
 // https://github.com/FabricMC/fabric/blob/1.21.5/fabric-lifecycle-events-v1/src/main/java/net/fabricmc/fabric/mixin/event/lifecycle/MinecraftServerMixin.java
 @Mixin(MinecraftServer.class)
-public class MinecraftServerStartStopMixin
+public abstract class MinecraftServerStartStopMixin
 {
 	@Inject(at = @At(value = "INVOKE",
 		target = "Lnet/minecraft/server/MinecraftServer;createMetadata()Lnet/minecraft/server/ServerMetadata;",
