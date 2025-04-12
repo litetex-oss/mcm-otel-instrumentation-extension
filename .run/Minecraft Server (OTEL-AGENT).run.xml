@@ -21,10 +21,10 @@
       <entry exclude="true" path="C:\Users\Alex\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-openal\3.3.3\daada81ceb5fc0c291fbfdd4433cb8d9423577f2\lwjgl-openal-3.3.3.jar" />
     </classpathModifications>
     <option name="MAIN_CLASS_NAME" value="net.fabricmc.devlaunchinjector.Main" />
-    <module name="mcm-otel-monitoring-extension.main" />
+    <module name="mcm-otel-instrumentation-extension.main" />
     <option name="PROGRAM_PARAMETERS" value="nogui" />
     <shortenClasspath name="ARGS_FILE" />
-    <option name="VM_PARAMETERS" value="-javaagent:opentelemetry-javaagent.jar -Dotel.service.name=minecraft-ota -Dotel.resource.attributes=service.instance.id=local -Dotel.exporter.otlp.endpoint=http://localhost:4318 -Dotel.metric.export.interval=10000 -Dotel.metrics.exporter=otlp -Dotel.logs.exporter=none -Dotel.instrumentation.common.default-enabled=false -Dotel.instrumentation.opentelemetry-api.enabled=true -Dotel.instrumentation.opentelemetry-instrumentation-annotations.enabled=true -Dotel.java.disabled.resource.providers=io.opentelemetry.instrumentation.resources.ProcessResourceProvider -Dfabric.dli.config=D:\Alex\Prog\_Projekte\oss\mcm-otel-monitoring-extension\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=server -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotServer" />
+    <option name="VM_PARAMETERS" value="-javaagent:opentelemetry-javaagent.jar -Dotel.service.name=minecraft-ota -Dotel.resource.attributes=service.instance.id=local -Dotel.exporter.otlp.endpoint=http://localhost:4318 -Dotel.metric.export.interval=10000 -Dotel.metrics.exporter=otlp -Dotel.logs.exporter=none -Dotel.instrumentation.common.default-enabled=false -Dotel.instrumentation.opentelemetry-api.enabled=true -Dotel.instrumentation.opentelemetry-instrumentation-annotations.enabled=true -Dotel.java.disabled.resource.providers=io.opentelemetry.instrumentation.resources.ProcessResourceProvider -Dfabric.dli.config=D:\Alex\Prog\_Projekte\oss\mcm-otel-instrumentation-extension\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=server -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotServer" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run/" />
     <method v="2">
       <option name="Make" enabled="true" />
