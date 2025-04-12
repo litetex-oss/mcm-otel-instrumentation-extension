@@ -14,6 +14,7 @@ import net.minecraft.server.MinecraftServer;
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerStartStopMixin
 {
+	@SuppressWarnings("javabugs:S6320")
 	@Inject(at = @At(value = "INVOKE",
 		target = "Lnet/minecraft/server/MinecraftServer;createMetadata()Lnet/minecraft/server/ServerMetadata;",
 		ordinal = 0),
