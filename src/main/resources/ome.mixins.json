@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.litetex.ome.mixin",
+  "package": "net.litetex.oie.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "ChunkGenerationStepMixin",

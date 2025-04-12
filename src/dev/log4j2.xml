@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
 	<Loggers>
-		<Logger level="${sys:ome.log.level:-debug}" name="net.litetex.ome" additivity="false">
+		<Logger level="${sys:oie.log.level:-debug}" name="net.litetex.oie" additivity="false">
 			<AppenderRef ref="DebugFile"/>
 			<AppenderRef ref="SysOut"/>
 			<AppenderRef ref="LatestFile"/>

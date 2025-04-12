@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.litetex.ome.fabric.FabricOME"
+      "net.litetex.oie.fabric.FabricOIE"
     ]
   },
   "mixins": [
