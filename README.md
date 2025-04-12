@@ -24,7 +24,7 @@ NOTE: To use this mod you should have [at least some basic knowledge](https://op
 
 ![Infra Overview](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/InfraOverview.svg)
 
-1. Make sure you have an endpoint where OpenTelemetry data can be ingested. This could be a [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) hosted by you or by someone else (like in the [Grafana Cloud](https://grafana.com/docs/grafana-cloud/monitor-applications/application-observability/collector/)).
+1. Make sure you have an endpoint where OpenTelemetry data can be ingested.<br/>This could be a [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) hosted by you or by someone else (e.g. in the [Grafana Cloud](https://grafana.com/docs/grafana-cloud/monitor-applications/application-observability/collector/)).
 2. [Setup the OpenTelemetry Java Agent](https://opentelemetry.io/docs/zero-code/java/agent/getting-started/) so that it sends data to your ingestion service.
 3. Simply add and configure this mod. It should work out of the box.
 4. Import the provided dashboard
