@@ -1,6 +1,6 @@
 <!-- modrinth_exclude.start -->
 
-[![Version](https://img.shields.io/modrinth/v/mcm-otel-instrumentation-extension)](https://modrinth.com/mod/mcm-otel-instrumentation-extension)
+[![Version](https://img.shields.io/modrinth/v/otel-instrumentation-extension)](https://modrinth.com/mod/otel-instrumentation-extension)
 [![Build](https://img.shields.io/github/actions/workflow/status/litetex-oss/mcm-otel-instrumentation-extension/check-build.yml?branch=dev)](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/actions/workflows/check-build.yml?query=branch%3Adev)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=litetex-oss_mcm-otel-instrumentation-extension&metric=alert_status)](https://sonarcloud.io/dashboard?id=litetex-oss_mcm-otel-instrumentation-extension)
 
@@ -22,7 +22,7 @@ Further documentation can be found directly inside the corresponding [Java-Sourc
 
 NOTE: To use this mod you should have [at least some basic knowledge](https://opentelemetry.io/docs/getting-started/ops/) how OpenTelemetry works.
 
-![Infra Overview](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/assets/InfraOverview.svg)
+![Infra Overview](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/InfraOverview.svg)
 
 1. Make sure you have an endpoint where OpenTelemetry data can be ingested. This could be a [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) hosted by you or by someone else (like in the [Grafana Cloud](https://grafana.com/docs/grafana-cloud/monitor-applications/application-observability/collector/)).
 2. [Setup the OpenTelemetry Java Agent](https://opentelemetry.io/docs/zero-code/java/agent/getting-started/) so that it sends data to your ingestion service.
