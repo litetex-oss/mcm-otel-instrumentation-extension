@@ -28,22 +28,21 @@ NOTE: To use this mod you should have [at least some basic knowledge](https://op
 2. [Setup the OpenTelemetry Java Agent](https://opentelemetry.io/docs/zero-code/java/agent/getting-started/) so that it sends data to your ingestion service.
 3. Simply add and configure this mod. It should work out of the box.
 4. Import the provided dashboard
-    <details><summary>Dashboard look</summary>
-
-    ![Overview](./assets/dashboard-overview.jpg)
-    ![Network](./assets/dashboard-network.jpg)
-    ![Chunk Generation](./assets/dashboard-chunk-generation.jpg)
-    ![Entities](./assets/dashboard-entities.jpg)
-    ![Player](./assets/dashboard-players.jpg)
-
-    </details>
-    
     * From [Grafana Dashboard](https://grafana.com/grafana/dashboards/23234)
     * From the [local demo in the repo](./_monitoring_dev_infra/docker-compose.yml)
 
 
 You may also have a look at the corresponding [development setup](https://github.com/litetex-oss/mcm-otel-instrumentation-extension?tab=readme-ov-file#demo-for-development) as it contains an locally running deployment of the full infrastructure.
 
+<details><summary>Dashboard look</summary>
+
+![Overview](./assets/dashboard-overview.jpg)
+![Network](./assets/dashboard-network.jpg)
+![Chunk Generation](./assets/dashboard-chunk-generation.jpg)
+![Entities](./assets/dashboard-entities.jpg)
+![Player](./assets/dashboard-players.jpg)
+
+</details>
 
 <!-- modrinth_exclude.start -->
 
