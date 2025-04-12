@@ -28,7 +28,7 @@ NOTE: To use this mod you should have [at least some basic knowledge](https://op
 2. [Setup the OpenTelemetry Java Agent](https://opentelemetry.io/docs/zero-code/java/agent/getting-started/) so that it sends data to your ingestion service.
 3. Simply add and configure this mod. It should work out of the box.
 4. Import the provided dashboard
-    * From [Grafana Dashboard](https://grafana.com/grafana/dashboards/23234)
+    * From [Grafana Dashboards](https://grafana.com/grafana/dashboards/23234)
     * From the [local demo in the repo](./_monitoring_dev_infra/docker-compose.yml)
 
 
@@ -72,12 +72,12 @@ dependencies {
 > The contents are hosted on [Maven Central](https://repo.maven.apache.org/maven2/net/litetex/mcm/). You shouldn't have to change anything as this is the default maven repo.<br/>
 > If this somehow shouldn't work you can also try [Modrinth Maven](https://support.modrinth.com/en/articles/8801191-modrinth-maven).
 
-## Related documentation
+## Contributing
+See the [contributing guide](./CONTRIBUTING.md) for detailed instructions on how to get started with our project.
+
+### Related documentation
 * [OTEL - Extending instrumentations with the API](https://opentelemetry.io/docs/zero-code/java/agent/api/)
 * [OTEL - SDK configuration](https://opentelemetry.io/docs/languages/java/configuration)
 * [OTEL - Disable default instrumentation](https://opentelemetry.io/docs/zero-code/java/agent/disable/#enable-manual-instrumentation-only)
-
-## Contributing
-See the [contributing guide](./CONTRIBUTING.md) for detailed instructions on how to get started with our project.
 
 <!-- modrinth_exclude.end -->
