@@ -16,31 +16,31 @@ This mod provides additional instrumentation for the [OpenTelemetry JavaAgent](h
 
 The default configuration of the mod should usually work out of the box.<br/>
 If you wish to customize it, open ``config/oie.json`` and tune the corresponding values.<br/>
-Further documentation can be found directly inside the corresponding [Java-Source Code](./src/main/java/net/litetex/oie/config/).
+Further documentation can be found directly inside the corresponding [Java-Source Code](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/src/main/java/net/litetex/oie/config/).
 
 ## How does the overall setup work?
 
 NOTE: To use this mod you should have [at least some basic knowledge](https://opentelemetry.io/docs/getting-started/ops/) how OpenTelemetry works.
 
-![Infra Overview](./assets/InfraOverview.svg)
+![Infra Overview](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/assets/InfraOverview.svg)
 
 1. Make sure you have an endpoint where OpenTelemetry data can be ingested. This could be a [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) hosted by you or by someone else (like in the [Grafana Cloud](https://grafana.com/docs/grafana-cloud/monitor-applications/application-observability/collector/)).
 2. [Setup the OpenTelemetry Java Agent](https://opentelemetry.io/docs/zero-code/java/agent/getting-started/) so that it sends data to your ingestion service.
 3. Simply add and configure this mod. It should work out of the box.
 4. Import the provided dashboard
     * From [Grafana Dashboards](https://grafana.com/grafana/dashboards/23234)
-    * From the [local demo in the repo](./_monitoring_dev_infra/docker-compose.yml)
+    * From the [local demo in the repo](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/_monitoring_dev_infra/docker-compose.yml)
 
 
 You may also have a look at the corresponding [development setup](https://github.com/litetex-oss/mcm-otel-instrumentation-extension?tab=readme-ov-file#demo-for-development) as it contains an locally running deployment of the full infrastructure.
 
 <details><summary>Dashboard look</summary>
 
-![Overview](./assets/dashboard-overview.jpg)
-![Network](./assets/dashboard-network.jpg)
-![Chunk Generation](./assets/dashboard-chunk-generation.jpg)
-![Entities](./assets/dashboard-entities.jpg)
-![Player](./assets/dashboard-players.jpg)
+![Overview](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-overview.jpg)
+![Network](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-network.jpg)
+![Chunk Generation](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-chunk-generation.jpg)
+![Entities](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-entities.jpg)
+![Player](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-players.jpg)
 
 </details>
 
