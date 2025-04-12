@@ -68,7 +68,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    implementation "io.opentelemetry:opentelemetry-api:1.49.0"
+    include implementation("io.opentelemetry:opentelemetry-api:1.49.0")
     compileOnly "me.lucko:spark-api:0.1-SNAPSHOT"
 
     // Only needed during development
