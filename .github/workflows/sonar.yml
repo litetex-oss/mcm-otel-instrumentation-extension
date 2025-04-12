@@ -11,6 +11,7 @@ on:
       - '.idea/**'
       - '.run/**'
       - 'assets/**'
+      - '_monitoring_dev_infra/**'
   pull_request:
     branches: [ dev ]
     paths-ignore: 
@@ -20,6 +21,7 @@ on:
       - '.idea/**'
       - '.run/**'
       - 'assets/**'
+      - '_monitoring_dev_infra/**'
 
 env:
   SONARCLOUD_ORG: ${{ github.event.organization.login }}
