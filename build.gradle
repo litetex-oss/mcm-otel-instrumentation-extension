@@ -22,7 +22,7 @@ base {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/ome.accesswidener")
+    accessWidenerPath = file("src/main/resources/oie.accesswidener")
     log4jConfigs.from(file("src/dev/log4j2.xml"))
 }
 

@@ -21,9 +21,9 @@
     ]
   },
   "mixins": [
-    "ome.mixins.json"
+    "oie.mixins.json"
   ],
-  "accessWidener": "ome.accesswidener",
+  "accessWidener": "oie.accesswidener",
   "recommends": {
     "fabricloader": ">=${loader_version}",
     "minecraft": ">=${minecraft_version}"
