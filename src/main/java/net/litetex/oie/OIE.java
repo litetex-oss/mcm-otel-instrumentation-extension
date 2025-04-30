@@ -7,6 +7,7 @@ import java.util.ServiceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongGauge;
@@ -41,6 +42,8 @@ public class OIE
 	{
 		this.config = config;
 		this.metricsCreator = new OIEMetricsCreator(this);
+		
+		this.validateOpenTelemetry();
 	}
 	
 	public Config config()
@@ -51,6 +54,32 @@ public class OIE
 	public String instrumentationName()
 	{
 		return this.config().getInstrumentationName();
+	}
+	
+	public void validateOpenTelemetry()
+	{
+		LOG.info("Validating used OpenTelemetry implementation...");
+		
+		final String otelImplName = GlobalOpenTelemetry.get().getClass().getName();
+		switch(otelImplName)
+		{
+			case "io.opentelemetry.api.DefaultOpenTelemetry":
+				LOG.error("Failed to detect presence of OpenTelemetry Agent!");
+				break;
+			case "io.opentelemetry.javaagent.instrumentation.opentelemetryapi.ApplicationOpenTelemetry":
+				LOG.error("OpenTelemetry Agent failed to properly hook API (it's using outdated v1)!");
+				LOG.warn("You can work around this problem by either:");
+				LOG.warn("* Using the OpenTelemetry Agent Helper Extension for Fabric: "
+					+ "https://github.com/litetex-oss/otel-fabric-helper-extension");
+				LOG.warn("* Disabling conflicting instrumentations with "
+					+ "-Dotel.instrumentation.common.default-enabled=false");
+				break;
+			case "io.opentelemetry.api.GlobalOpenTelemetry$ObfuscatedOpenTelemetry":
+				LOG.error("OpenTelemetry Agent extension likely crashed: Unexpected ObfuscatedOpenTelemetry in use");
+				break;
+			default:
+				LOG.info("OK - Using {}", otelImplName);
+		}
 	}
 	
 	public OIEMetricsCreator metricsCreator()
