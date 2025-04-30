@@ -105,7 +105,7 @@ public abstract class AbstractMetricSampler<M extends ObservableMeasurement> imp
 				this.logger.debug(
 					"Finished sampling {}, took {}ns",
 					this.name,
-					(System.nanoTime() - startNanos));
+					System.nanoTime() - startNanos);
 			}
 		}
 	}
