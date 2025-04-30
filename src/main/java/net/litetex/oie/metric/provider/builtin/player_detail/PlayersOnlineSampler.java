@@ -41,7 +41,7 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 						.put(CommonAttributeKeys.NAME, key.profile().getName())
 						.put(CommonAttributeKeys.UUID, key.profile().getId().toString())
 						.put(CommonAttributeKeys.WORLD, this.oie().formatWorldName(key.world()))
-						.put(GAME_MODE, key.gameMode().getName())
+						.put(GAME_MODE, key.gameMode().name())
 						.build()
 				),
 				player -> (long)1));
