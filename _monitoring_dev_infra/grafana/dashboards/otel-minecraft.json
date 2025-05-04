@@ -2664,7 +2664,7 @@
       {
         "auto": true,
         "auto_count": 300,
-        "auto_min": "10s",
+        "auto_min": "30s",
         "current": {
           "text": "$__auto",
           "value": "$__auto"
