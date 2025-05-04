@@ -41,6 +41,11 @@ You may also have a look at the corresponding [development setup](https://github
 
 </details>
 
+
+### Example [integrations](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/_integrations)
+
+* For [``itzg/minecraft-server``](https://github.com/itzg/docker-minecraft-server) see [here](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/_integrations/itzg-minecraft-server)
+
 ## Configuration
 
 The default configuration of the mod should usually work out of the box.<br/>

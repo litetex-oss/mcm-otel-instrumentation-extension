@@ -12,6 +12,7 @@ on:
       - '.run/**'
       - 'assets/**'
       - '_monitoring_dev_infra/**'
+      - '_integrations/**'
   pull_request:
     branches: [ dev ]
     paths-ignore: 
@@ -22,6 +23,7 @@ on:
       - '.run/**'
       - 'assets/**'
       - '_monitoring_dev_infra/**'
+      - '_integrations/**'
 
 jobs:
   build:
