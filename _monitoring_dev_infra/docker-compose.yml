@@ -6,7 +6,6 @@ services:
     environment:
       - GF_ANALYTICS_ENABLED=false
       - GF_ANALYTICS_REPORTING_ENABLED=false
-      # Updates are done on a daily basis - no check is required
       - GF_ANALYTICS_CHECK_FOR_UPDATES=false
       - GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES=false
       - GF_ANALYTICS_FEEDBACK_LINKS_ENABLED=false
