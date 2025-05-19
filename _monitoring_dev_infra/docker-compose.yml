@@ -1,0 +1,89 @@
+services:
+  grafana:
+    image: grafana/grafana:12.0.0
+    restart: unless-stopped
+    user: 0:0
+    environment:
+      - GF_ANALYTICS_ENABLED=false
+      - GF_ANALYTICS_REPORTING_ENABLED=false
+      - GF_ANALYTICS_CHECK_FOR_UPDATES=false
+      - GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES=false
+      - GF_ANALYTICS_FEEDBACK_LINKS_ENABLED=false
+      - GF_SECURITY_DISABLE_GRAVATAR=true
+      - GF_LOG_LEVEL=warn
+      # Disable bloat
+      - GF_PLUGINS_DISABLE_PLUGINS=grafana-lokiexplore-app,grafana-pyroscope-app,grafana-azure-monitor-datasource,cloudwatch,elasticsearch,stackdriver,influxdb,mssql,mysql,opentsdb,grafana-postgresql-datasource
+    networks:
+      - monitoring_net
+    volumes:
+      - "./grafana/provisioning:/etc/grafana/provisioning:ro"
+      - "./grafana/dashboards:/var/lib/grafana/dashboards:ro"
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    ports:
+      - 3000:3000
+
+  otelc:
+    image: otel/opentelemetry-collector-contrib:0.123.0
+    restart: unless-stopped
+    command: "--config=/config/otelc/config.yml"
+    networks:
+      - monitoring_net
+    volumes:
+      - "./otelc:/config/otelc:ro"
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    ports:
+      - 4317:4317
+      - 4318:4318
+  
+  mimir:
+    image: grafana/mimir:2.16.0
+    restart: unless-stopped
+    user: 0:0
+    command: "--config.file=/config/config.yml"
+    networks:
+      - monitoring_net
+    volumes:
+      - "./mimir/mimir.yml:/config/config.yml:ro"
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  loki:
+    image: grafana/loki:3.5.0
+    restart: unless-stopped
+    user: 0:0
+    command: "-config.file=/etc/loki/loki.yml -legacy-read-mode=false"
+    networks:
+      - monitoring_net
+    volumes:
+      - "./loki/loki.yml:/etc/loki/loki.yml:ro"
+    deploy:
+      resources:
+        limits:
+          memory: 600M
+
+  tempo:
+    image: grafana/tempo:main-35dace7
+    restart: unless-stopped
+    user: 0:0
+    command: "-target=scalable-single-binary -config.file=/etc/tempo.yml"
+    networks:
+      - monitoring_net
+    volumes:
+      - "./tempo/tempo.yml:/etc/tempo.yml:ro"
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+networks:
+  monitoring_net:
+    name: "monitoring-net"
+    enable_ipv6: true
