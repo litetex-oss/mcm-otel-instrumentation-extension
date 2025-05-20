@@ -1,3 +1,6 @@
+# 1.0.1
+* Update opentelemetry-api
+
 # 1.0.0
 _Initial stable release_
 * No noteworthy changes since 0.1
