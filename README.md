@@ -16,8 +16,8 @@ This mod provides additional instrumentation for the [OpenTelemetry JavaAgent](h
 1. Make sure you have an endpoint where OpenTelemetry data can be ingested.<br/>This could be a [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) hosted by you or by someone else (e.g. in the [Grafana Cloud](https://grafana.com/docs/grafana-cloud/monitor-applications/application-observability/collector/)).
 2. [Setup the OpenTelemetry Java Agent](https://opentelemetry.io/docs/zero-code/java/agent/getting-started/) so that it sends data to your ingestion service.
 3. Add the [OpenTelemetry Agent Helper Extension for Fabric](https://github.com/litetex-oss/otel-fabric-helper-extension).
-    * This is required so that OpenTelemetry Agent is correctly detecting and utilizing the mod.
-4. Simply add and configure this mod. It should work out of the box.
+    * This is required so that the OpenTelemetry Agent is correctly detecting and utilizing the mod.
+4. Simply add and (optionally) configure this mod. It should work out of the box.
 5. Import the provided dashboard into Grafana
     * From [Grafana Dashboards](https://grafana.com/grafana/dashboards/23234)
     * From the [local demo in the repo](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/_monitoring_dev_infra/docker-compose.yml)
