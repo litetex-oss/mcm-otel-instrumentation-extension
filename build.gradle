@@ -16,7 +16,7 @@ ext {
     // Derive version from yarn
     minecraft_version = project.yarn_mappings.split("\\+")[0]
 
-    otelApiVersion = '1.50.0'
+    otelApiVersion = '1.51.0'
 }
 
 version = project.mod_version
