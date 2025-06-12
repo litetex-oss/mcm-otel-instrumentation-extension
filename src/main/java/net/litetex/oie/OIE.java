@@ -126,7 +126,7 @@ public class OIE
 				Attributes.builder()
 					.put(
 						AttributeKey.stringKey("minecraft_version"),
-						SharedConstants.getGameVersion().getName())
+						SharedConstants.getGameVersion().name())
 					.put(
 						AttributeKey.stringKey("mod_loader_name"),
 						"fabric")

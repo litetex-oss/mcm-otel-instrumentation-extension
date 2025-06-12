@@ -1,3 +1,7 @@
+# 1.1.0
+* Now targeting 1.21.6
+* [25w21a] Fix compilation
+
 # 1.0.1
 * Update opentelemetry-api
 
