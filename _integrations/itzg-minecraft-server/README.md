@@ -3,7 +3,7 @@
 ## Setup
 
 1. Ensure that [``monitoring dev infra``](../../_monitoring_dev_infra/) is started
-2. Copy [``secrets.env.template``](./server/secrets.env.template) to [``secrets.env``](./server/secrets.env) and fill it out
+2. Copy [``secrets.env.template``](./server/secrets.env.template) to ``secrets.env`` and fill it out
 
 ## Start & Stop
 
