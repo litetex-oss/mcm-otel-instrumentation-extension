@@ -92,7 +92,7 @@ public class OIEMetricsCreator
 		return this.createMetric(
 			Meter::counterBuilder,
 			LongCounterBuilder::build,
-			name,
+			name + this.metricsConfig.getCounterSuffix(),
 			customizeBuilder);
 	}
 	

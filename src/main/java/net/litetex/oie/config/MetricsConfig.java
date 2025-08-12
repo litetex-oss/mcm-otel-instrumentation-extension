@@ -26,6 +26,11 @@ public class MetricsConfig
 	private String prefix = "minecraft_";
 	
 	/**
+	 * Suffix for counters
+	 */
+	private String counterSuffix = "_total";
+	
+	/**
 	 * Only enables the specified metrics.
 	 * <p>
 	 * <b>ALL OTHER METRICS WILL BE DISABLED!</b>
@@ -69,6 +74,16 @@ public class MetricsConfig
 	public void setPrefix(final String prefix)
 	{
 		this.prefix = Objects.requireNonNullElse(prefix, "");
+	}
+	
+	public String getCounterSuffix()
+	{
+		return this.counterSuffix;
+	}
+	
+	public void setCounterSuffix(final String counterSuffix)
+	{
+		this.counterSuffix = Objects.requireNonNullElse(counterSuffix, "");
 	}
 	
 	public Set<String> getEnabledOnly()
