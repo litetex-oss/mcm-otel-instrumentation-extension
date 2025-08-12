@@ -3,6 +3,7 @@
   * You might have to re-generate your config
 * Change dashboard to use native OpenTelemetry ingestion (and not prometheus remote write)
   * This causes some counters to no longer include the ``_total`` suffix.
+* Improve error handling when encountering a not parseable config file
 * Now targeting 1.21.8
 * Update opentelemetry-api
 

@@ -48,7 +48,7 @@ public class FabricOIE implements ModInitializer
 			{
 				return this.gson.fromJson(Files.readString(configFilePath), Config.class);
 			}
-			catch(final IOException ioe)
+			catch(final Exception ioe)
 			{
 				LOG.warn("Failed to read config file", ioe);
 			}
