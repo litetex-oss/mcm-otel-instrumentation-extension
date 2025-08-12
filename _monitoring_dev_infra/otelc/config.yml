@@ -8,21 +8,22 @@ receivers:
         endpoint: 0.0.0.0:4318
 
 exporters:
-  prometheusremotewrite/mimir:
-    endpoint: http://mimir:9009/api/v1/push
-    tls:
-      insecure: true
-    headers:
-      "X-Scope-OrgID": local
-  otlp:
-    endpoint: http://tempo:4317
+  otlphttp/mimir:
+    endpoint: http://mimir:9009/otlp
     compression: none # Compression is not needed for internal network communication
     tls:
       insecure: true
     headers:
       "X-Scope-OrgID": local
-  otlphttp:
+  otlphttp/loki:
     endpoint: http://loki:3100/otlp
+    compression: none # Compression is not needed for internal network communication
+    tls:
+      insecure: true
+    headers:
+      "X-Scope-OrgID": local
+  otlp/tempo:
+    endpoint: http://tempo:4317
     compression: none # Compression is not needed for internal network communication
     tls:
       insecure: true
@@ -42,10 +43,10 @@ service:
   pipelines:
     metrics:
       receivers: [otlp]
-      exporters: [prometheusremotewrite/mimir]
-    traces:
-      receivers: [otlp]
-      exporters: [otlp]
+      exporters: [otlphttp/mimir]
     logs:
       receivers: [otlp]
-      exporters: [otlphttp]
+      exporters: [otlphttp/loki]
+    traces:
+      receivers: [otlp]
+      exporters: [otlp/tempo]
