@@ -14,7 +14,7 @@ services:
       # Disable bloat
       - GF_PLUGINS_DISABLE_PLUGINS=grafana-lokiexplore-app,grafana-pyroscope-app,grafana-azure-monitor-datasource,cloudwatch,elasticsearch,stackdriver,influxdb,mssql,mysql,opentsdb,grafana-postgresql-datasource
     networks:
-      - monitoring_net
+      - monitoring
     volumes:
       - "./grafana/provisioning:/etc/grafana/provisioning:ro"
       - "./grafana/dashboards:/var/lib/grafana/dashboards:ro"
@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     command: "--config=/config/otelc/config.yml"
     networks:
-      - monitoring_net
+      - monitoring
     volumes:
       - "./otelc:/config/otelc:ro"
     deploy:
@@ -47,7 +47,7 @@ services:
     user: 0:0
     command: "--config.file=/config/config.yml"
     networks:
-      - monitoring_net
+      - monitoring
     volumes:
       - "./mimir/mimir.yml:/config/config.yml:ro"
     deploy:
@@ -61,7 +61,7 @@ services:
     user: 0:0
     command: "-config.file=/etc/loki/loki.yml -legacy-read-mode=false"
     networks:
-      - monitoring_net
+      - monitoring
     volumes:
       - "./loki/loki.yml:/etc/loki/loki.yml:ro"
     deploy:
@@ -75,7 +75,7 @@ services:
     user: 0:0
     command: "-target=scalable-single-binary -config.file=/etc/tempo.yml"
     networks:
-      - monitoring_net
+      - monitoring
     volumes:
       - "./tempo/tempo.yml:/etc/tempo.yml:ro"
     deploy:
@@ -84,6 +84,6 @@ services:
           memory: 500M
 
 networks:
-  monitoring_net:
-    name: "monitoring-net"
+  monitoring:
+    name: "monitoring"
     enable_ipv6: true
