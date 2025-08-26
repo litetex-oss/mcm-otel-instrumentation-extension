@@ -43,8 +43,8 @@ public abstract class PlayerMetricSampler<T extends Number, M extends TypedObser
 						final GameProfile profile = player.getGameProfile();
 						
 						return Attributes.builder()
-							.put(CommonAttributeKeys.NAME, profile.getName())
-							.put(CommonAttributeKeys.UUID, profile.getId().toString())
+							.put(CommonAttributeKeys.NAME, profile.name())
+							.put(CommonAttributeKeys.UUID, profile.id().toString())
 							.build();
 					}),
 				this::getValueForPlayer));
