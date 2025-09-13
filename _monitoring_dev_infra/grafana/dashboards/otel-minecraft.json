@@ -1511,7 +1511,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(minecraft_loaded_entities{instance=~\"$instance\",job=~\"$job\"}) by (type) > 0",
+          "expr": "sort_desc(sum(minecraft_loaded_entities{instance=~\"$instance\",job=~\"$job\"}) by (type) > 0)",
           "hide": false,
           "instant": true,
           "interval": "$minstep",
