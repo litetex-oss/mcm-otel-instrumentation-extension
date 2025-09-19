@@ -11,6 +11,30 @@ OpenTelemetry can be used to [report various monitoring data (including metrics,
 
 This mod provides additional instrumentation for the [OpenTelemetry JavaAgent](https://opentelemetry.io/docs/zero-code/java/agent/) so that various game metrics can be reported. The overall functionality is similar to [``fabric-exporter``](https://github.com/ruscalworld/fabric-exporter).
 
+<details><summary>Instrumented/Reported metrics</summary>
+
+* MSPT/TPS
+* Loaded chunks
+* Server state
+* Networking
+  * connections
+  * handshakes
+  * packets sent/received
+* Chunk generation
+* Entities
+  * grouped by type, spawn ground and world/dimension
+* Players
+  * by world
+  * online
+  * total xp (score)
+  * xp level
+* Runtime
+  * game version
+  * Fabric version
+* Optional data from [spark](https://github.com/lucko/spark)
+
+</details>
+
 ## Setup 
 
 1. Make sure you have an endpoint where OpenTelemetry data can be ingested.<br/>This could be a [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) hosted by you or by someone else (e.g. in the [Grafana Cloud](https://grafana.com/docs/grafana-cloud/monitor-applications/application-observability/collector/)).
