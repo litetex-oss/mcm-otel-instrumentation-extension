@@ -1,3 +1,7 @@
+# 1.2.1
+* Now targeting 1.21.9
+* Updated opentelemetry-api
+
 # 1.2.0
 * Add an option to change the suffix of counters (``counterSuffix``). Defaults to ``_total`` for new configurations.
   * You might have to re-generate your config
@@ -5,14 +9,14 @@
   * This causes some counters to no longer include the ``_total`` suffix.
 * Improve error handling when encountering a not parseable config file
 * Now targeting 1.21.8
-* Update opentelemetry-api
+* Updated opentelemetry-api
 
 # 1.1.0
 * Now targeting 1.21.6
 * [25w21a] Fix compilation
 
 # 1.0.1
-* Update opentelemetry-api
+* Updated opentelemetry-api
 
 # 1.0.0
 _Initial stable release_
