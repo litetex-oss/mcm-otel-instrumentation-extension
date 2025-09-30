@@ -12,6 +12,11 @@ common:
   path_prefix: /loki
   compactor_address: http://loki:3100
   replication_factor: 1
+  ring:
+    replication_factor: 1
+    instance_enable_ipv6: true
+    kvstore:
+      store: memberlist
 
 storage_config:
   filesystem:
@@ -46,7 +51,6 @@ schema_config:
   configs:
     - from: 2024-03-29
       store: tsdb
-      # object_store: s3
       object_store: filesystem
       schema: v13
       index:
