@@ -38,8 +38,8 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 				player -> this.playerAttributeCache.computeIfAbsent(
 					new AttributeCacheKey(player),
 					key -> Attributes.builder()
-						.put(CommonAttributeKeys.NAME, key.profile().getName())
-						.put(CommonAttributeKeys.UUID, key.profile().getId().toString())
+						.put(CommonAttributeKeys.NAME, key.profile().name())
+						.put(CommonAttributeKeys.UUID, key.profile().id().toString())
 						.put(CommonAttributeKeys.WORLD, this.oie().formatWorldName(key.world()))
 						.put(GAME_MODE, key.gameMode().name())
 						.build()
@@ -69,7 +69,7 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 	{
 		public AttributeCacheKey(final ServerPlayerEntity player)
 		{
-			this(player.getGameProfile(), player.getWorld(), player.interactionManager.getGameMode());
+			this(player.getGameProfile(), player.getEntityWorld(), player.interactionManager.getGameMode());
 		}
 	}
 }
