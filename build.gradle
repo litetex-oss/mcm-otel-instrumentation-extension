@@ -82,7 +82,7 @@ dependencies {
     include "io.opentelemetry:opentelemetry-context:${otelApiVersion}"
 
     // compileOnly "me.lucko:spark-api:0.1-SNAPSHOT"
-    modCompileOnly "maven.modrinth:spark:1.10.142-fabric"
+    modCompileOnly "maven.modrinth:spark:1.10.145-fabric"
 
     // Only needed during development
 
