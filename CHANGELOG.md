@@ -1,3 +1,6 @@
+# 1.2.2
+* Fixed a crash when the server is stopped
+
 # 1.2.1
 * Now targeting 1.21.9
 * Updated opentelemetry-api
