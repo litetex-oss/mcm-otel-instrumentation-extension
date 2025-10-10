@@ -53,4 +53,4 @@ if [[ "$USE_AGENT_OTEL_FABRIC_EXTENSION" = true ]]; then
     fi
 fi
 
-exec "${SCRIPTS:-/}start-setupRbac" "$@"
+exec "$(dirname "$0")/start-setupRbac" "$@"

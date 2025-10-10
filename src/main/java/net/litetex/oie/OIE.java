@@ -154,7 +154,6 @@ public class OIE
 		LOG.debug("Handling onServerStopping");
 		
 		this.registeredSamplers.forEach(MetricSampler::close);
-		this.registeredSamplers.clear();
 		
 		if(this.up != null)
 		{

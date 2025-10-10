@@ -52,19 +52,19 @@ if [[ "$USE_AGENT_OTEL" = true ]]; then
         echo "[OTEL Agent] Checking if extras need to be applied"
         case "${TYPE^^}" in
             *FABRIC)
-                exec "${SCRIPTS:-/}setup-otel-agent-extras-fabric.sh" "$@"
+                exec "$(dirname "$0")/setup-otel-agent-extras-fabric.sh" "$@"
             ;;
 
             *)
                 echo "Nothing needs to be applied"
-                exec "${SCRIPTS:-/}start-setupRbac" "$@"
+                exec "$(dirname "$0")/start-setupRbac" "$@"
         ;;
 
         esac
     else
         echo "[OTEL Agent] Agent $AGENT_OTEL_JAR missing - Starting without it..."
-        exec "${SCRIPTS:-/}start-setupRbac" "$@"
+        exec "$(dirname "$0")/start-setupRbac" "$@"
     fi
 else
-    exec "${SCRIPTS:-/}start-setupRbac" "$@"
+    exec "$(dirname "$0")/start-setupRbac" "$@"
 fi
