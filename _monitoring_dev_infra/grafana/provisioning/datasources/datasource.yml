@@ -1,0 +1,35 @@
+apiVersion: 1
+
+datasources:
+- name: Mimir
+  type: prometheus
+  uid: mimir
+  access: proxy
+  url: http://mimir:9009/prometheus
+  isDefault: true
+  editable: false
+  jsonData:
+    httpHeaderName1: "X-Scope-OrgID"
+  secureJsonData:
+    httpHeaderValue1: "local"
+
+- name: Loki
+  type: loki
+  uid: loki
+  access: proxy
+  url: http://loki:3100
+  jsonData:
+    httpHeaderName1: "X-Scope-OrgID"
+  secureJsonData:
+    httpHeaderValue1: "local"
+
+- name: Tempo
+  type: tempo
+  uid: tempo
+  access: proxy
+  url: http://tempo:80
+  editable: false
+  jsonData:
+    httpHeaderName1: "X-Scope-OrgID"
+  secureJsonData:
+    httpHeaderValue1: "local"
