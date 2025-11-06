@@ -2,7 +2,7 @@ package net.litetex.oie.metric.provider.builtin.player_detail;
 
 import net.litetex.oie.metric.measurement.TypedObservableLongMeasurement;
 import net.litetex.oie.metric.provider.CachedMetricSampler;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 
 public class PlayersXPLevelSampler extends PlayerMetricSampler<Long, TypedObservableLongMeasurement>
@@ -13,7 +13,7 @@ public class PlayersXPLevelSampler extends PlayerMetricSampler<Long, TypedObserv
 	}
 	
 	@Override
-	protected Long getValueForPlayer(final ServerPlayerEntity player)
+	protected Long getValueForPlayer(final ServerPlayer player)
 	{
 		return (long)player.experienceLevel;
 	}

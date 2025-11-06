@@ -21,12 +21,12 @@ public class ServerPausedSampler extends AbstractMetricSampler<ObservableLongMea
 	public void register(final Meter meter, final MinecraftServer server)
 	{
 		super.register(meter, server);
-		this.pauseWhenEmptyTicks = server.getPauseWhenEmptySeconds() * TPS;
+		this.pauseWhenEmptyTicks = server.pauseWhenEmptySeconds() * TPS;
 	}
 	
 	@Override
 	protected void sample(final ObservableLongMeasurement measurement)
 	{
-		measurement.record(this.server.idleTickCount >= this.pauseWhenEmptyTicks ? 1 : 0);
+		measurement.record(this.server.emptyTicks >= this.pauseWhenEmptyTicks ? 1 : 0);
 	}
 }

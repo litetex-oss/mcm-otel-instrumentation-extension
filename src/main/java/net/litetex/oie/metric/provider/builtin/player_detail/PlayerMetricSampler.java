@@ -14,13 +14,13 @@ import io.opentelemetry.api.metrics.Meter;
 import net.litetex.oie.metric.CommonAttributeKeys;
 import net.litetex.oie.metric.measurement.TypedObservableMeasurement;
 import net.litetex.oie.metric.provider.PausableMetricSampler;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 
 public abstract class PlayerMetricSampler<T extends Number, M extends TypedObservableMeasurement<T>>
 	extends PausableMetricSampler<T, M>
 {
-	protected final Map<ServerPlayerEntity, Attributes> playerAttributeCache = new WeakHashMap<>();
+	protected final Map<ServerPlayer, Attributes> playerAttributeCache = new WeakHashMap<>();
 	
 	protected PlayerMetricSampler(
 		final String name,
@@ -29,12 +29,12 @@ public abstract class PlayerMetricSampler<T extends Number, M extends TypedObser
 		super(name, buildWithCallback);
 	}
 	
-	protected abstract T getValueForPlayer(ServerPlayerEntity player);
+	protected abstract T getValueForPlayer(ServerPlayer player);
 	
 	@Override
 	protected Map<Attributes, T> getSamples()
 	{
-		return this.server.getPlayerManager().getPlayerList()
+		return this.server.getPlayerList().getPlayers()
 			.stream()
 			.collect(Collectors.toMap(
 				p -> this.playerAttributeCache.computeIfAbsent(

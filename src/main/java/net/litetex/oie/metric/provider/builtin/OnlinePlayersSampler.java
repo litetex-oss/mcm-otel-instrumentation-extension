@@ -4,7 +4,7 @@ import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.ObservableLongMeasurement;
 import net.litetex.oie.metric.CommonAttributeKeys;
 import net.litetex.oie.metric.provider.AbstractMetricSampler;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 
 
 public class OnlinePlayersSampler extends AbstractMetricSampler<ObservableLongMeasurement>
@@ -17,10 +17,10 @@ public class OnlinePlayersSampler extends AbstractMetricSampler<ObservableLongMe
 	@Override
 	protected void sample(final ObservableLongMeasurement measurement)
 	{
-		for(final ServerWorld world : this.server.getWorlds())
+		for(final ServerLevel world : this.server.getAllLevels())
 		{
 			measurement.record(
-				world.getPlayers().size(),
+				world.players().size(),
 				Attributes.of(
 					CommonAttributeKeys.WORLD,
 					this.oie().formatWorldName(world)));

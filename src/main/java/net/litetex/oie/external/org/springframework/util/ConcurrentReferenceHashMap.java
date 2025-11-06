@@ -247,7 +247,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 	public V get(Object key)
 	{
 		Reference<K, V> ref = getReference(key, Restructure.WHEN_NECESSARY);
-		Entry<K, V> entry = (ref != null ? ref.get() : null);
+		net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry =
+			(ref != null ? ref.get() : null);
 		return (entry != null ? entry.getValue() : null);
 	}
 	
@@ -255,7 +256,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 	public V getOrDefault(Object key, V defaultValue)
 	{
 		Reference<K, V> ref = getReference(key, Restructure.WHEN_NECESSARY);
-		Entry<K, V> entry = (ref != null ? ref.get() : null);
+		net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry =
+			(ref != null ? ref.get() : null);
 		return (entry != null ? entry.getValue() : defaultValue);
 	}
 	
@@ -263,12 +265,15 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 	public boolean containsKey(Object key)
 	{
 		Reference<K, V> ref = getReference(key, Restructure.WHEN_NECESSARY);
-		Entry<K, V> entry = (ref != null ? ref.get() : null);
+		net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry =
+			(ref != null ? ref.get() : null);
 		return (entry != null && ObjectUtils.nullSafeEquals(entry.getKey(), key));
 	}
 	
 	/**
-	 * Return a {@link Reference} to the {@link Entry} for the specified {@code key}, or {@code null} if not found.
+	 * Return a {@link Reference} to the
+	 * {@link net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry} for the specified
+	 * {@code key}, or {@code null} if not found.
 	 *
 	 * @param key         the key (can be {@code null})
 	 * @param restructure types of restructure allowed during this call
@@ -300,7 +305,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 				@Override
 				protected V execute(
 					Reference<K, V> ref,
-					Entry<K, V> entry,
+					net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry,
 					Entries<V> entries)
 				{
 					if(entry != null)
@@ -326,7 +331,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 			key, new Task<V>(TaskOption.RESTRUCTURE_AFTER, TaskOption.SKIP_IF_EMPTY)
 			{
 				@Override
-				protected V execute(Reference<K, V> ref, Entry<K, V> entry)
+				protected V execute(
+					Reference<K, V> ref,
+					net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry)
 				{
 					if(entry != null)
 					{
@@ -348,7 +355,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 			key, new Task<Boolean>(TaskOption.RESTRUCTURE_AFTER, TaskOption.SKIP_IF_EMPTY)
 			{
 				@Override
-				protected Boolean execute(Reference<K, V> ref, Entry<K, V> entry)
+				protected Boolean execute(
+					Reference<K, V> ref,
+					net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry)
 				{
 					if(entry != null && ObjectUtils.nullSafeEquals(entry.getValue(), value))
 					{
@@ -371,7 +380,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 			key, new Task<Boolean>(TaskOption.RESTRUCTURE_BEFORE, TaskOption.SKIP_IF_EMPTY)
 			{
 				@Override
-				protected Boolean execute(Reference<K, V> ref, Entry<K, V> entry)
+				protected Boolean execute(
+					Reference<K, V> ref,
+					net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry)
 				{
 					if(entry != null && ObjectUtils.nullSafeEquals(entry.getValue(), oldValue))
 					{
@@ -391,7 +402,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 			key, new Task<V>(TaskOption.RESTRUCTURE_BEFORE, TaskOption.SKIP_IF_EMPTY)
 			{
 				@Override
-				protected V execute(Reference<K, V> ref, Entry<K, V> entry)
+				protected V execute(
+					Reference<K, V> ref,
+					net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry)
 				{
 					if(entry != null)
 					{
@@ -590,10 +603,14 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 				final int index = getIndex(hash, this.references);
 				final Reference<K, V> head = this.references[index];
 				Reference<K, V> ref = findInChain(head, key, hash);
-				Entry<K, V> entry = (ref != null ? ref.get() : null);
+				net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry =
+					(ref != null ? ref.get() : null);
 				Entries<V> entries = value -> {
 					@SuppressWarnings("unchecked")
-					Entry<K, V> newEntry = new Entry<>((K)key, value);
+					net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> newEntry =
+						new net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<>(
+							(K)key,
+							value);
 					Reference<K, V> newReference = Segment.this.referenceManager.createReference(newEntry, hash, head);
 					Segment.this.references[index] = newReference;
 					Segment.this.count.incrementAndGet();
@@ -692,7 +709,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 						{
 							if(!toPurge.contains(ref))
 							{
-								Entry<K, V> entry = ref.get();
+								net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K
+									, V>
+									entry = ref.get();
 								// Also filter out null references that are now null
 								// they should be polled from the queue in a later restructure call.
 								if(entry != null)
@@ -721,7 +740,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 						{
 							if(!toPurge.contains(ref))
 							{
-								Entry<K, V> entry = ref.get();
+								net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K
+									, V>
+									entry = ref.get();
 								// Also filter out null references that are now null
 								// they should be polled from the queue in a later restructure call.
 								if(entry != null)
@@ -751,7 +772,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 			{
 				if(currRef.getHash() == hash)
 				{
-					Entry<K, V> entry = currRef.get();
+					net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry =
+						currRef.get();
 					if(entry != null)
 					{
 						K entryKey = entry.getKey();
@@ -796,7 +818,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 	
 	
 	/**
-	 * A reference to an {@link Entry} contained in the map. Implementations are usually wrappers around specific Java
+	 * A reference to an {@link net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry}
+	 * contained in the map. Implementations are usually wrappers around specific Java
 	 * reference implementations (for example, {@link SoftReference}).
 	 *
 	 * @param <K> the key type
@@ -807,7 +830,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 		/**
 		 * Return the referenced entry, or {@code null} if the entry is no longer available.
 		 */
-		Entry<K, V> get();
+		net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> get();
 		
 		/**
 		 * Return the hash for the reference.
@@ -910,11 +933,11 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 		 * @param entry   the found entry (or {@code null})
 		 * @param entries access to the underlying entries
 		 * @return the result of the task
-		 * @see #execute(Reference, Entry)
+		 * @see #execute(Reference, net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry)
 		 */
 		protected T execute(
 			Reference<K, V> ref,
-			Entry<K, V> entry,
+			net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry,
 			Entries<V> entries)
 		{
 			return execute(ref, entry);
@@ -926,9 +949,11 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 		 * @param ref   the found reference (or {@code null})
 		 * @param entry the found entry (or {@code null})
 		 * @return the result of the task
-		 * @see #execute(Reference, Entry, Entries)
+		 * @see #execute(Reference, net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry, Entries)
 		 */
-		protected T execute(Reference<K, V> ref, Entry<K, V> entry)
+		protected T execute(
+			Reference<K, V> ref,
+			net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry)
 		{
 			return null;
 		}
@@ -976,7 +1001,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 			if(o instanceof Map.Entry<?, ?> entry)
 			{
 				Reference<K, V> ref = ConcurrentReferenceHashMap.this.getReference(entry.getKey(), Restructure.NEVER);
-				Entry<K, V> otherEntry = (ref != null ? ref.get() : null);
+				net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> otherEntry =
+					(ref != null ? ref.get() : null);
 				if(otherEntry != null)
 				{
 					return ObjectUtils.nullSafeEquals(entry.getValue(), otherEntry.getValue());
@@ -1023,9 +1049,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 		
 		private Reference<K, V> reference;
 		
-		private Entry<K, V> next;
+		private net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> next;
 		
-		private Entry<K, V> last;
+		private net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> last;
 		
 		public EntryIterator()
 		{
@@ -1040,7 +1066,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 		}
 		
 		@Override
-		public Entry<K, V> next()
+		public net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> next()
 		{
 			getNextIfNecessary();
 			if(this.next == null)
@@ -1123,7 +1149,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 	 */
 	protected class ReferenceManager
 	{
-		private final ReferenceQueue<Entry<K, V>> queue = new ReferenceQueue<>();
+		private final ReferenceQueue<net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V>>
+			queue = new ReferenceQueue<>();
 		
 		/**
 		 * Factory method used to create a new {@link Reference}.
@@ -1133,7 +1160,10 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 		 * @param next  the next reference in the chain, or {@code null} if none
 		 * @return a new {@link Reference}
 		 */
-		public Reference<K, V> createReference(Entry<K, V> entry, int hash, Reference<K, V> next)
+		public Reference<K, V> createReference(
+			net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry,
+			int hash,
+			Reference<K, V> next)
 		{
 			if(ConcurrentReferenceHashMap.this.referenceType == ReferenceType.WEAK)
 			{
@@ -1161,15 +1191,19 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 	/**
 	 * Internal {@link Reference} implementation for {@link SoftReference SoftReferences}.
 	 */
-	private static final class SoftEntryReference<K, V> extends SoftReference<Entry<K, V>> implements Reference<K, V>
+	private static final class SoftEntryReference<K, V>
+		extends SoftReference<net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V>>
+		implements Reference<K, V>
 	{
 		private final int hash;
 		
 		private final Reference<K, V> nextReference;
 		
 		public SoftEntryReference(
-			Entry<K, V> entry, int hash, Reference<K, V> next,
-			ReferenceQueue<Entry<K, V>> queue)
+			net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry,
+			int hash,
+			Reference<K, V> next,
+			ReferenceQueue<net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V>> queue)
 		{
 			
 			super(entry, queue);
@@ -1200,15 +1234,19 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 	/**
 	 * Internal {@link Reference} implementation for {@link WeakReference WeakReferences}.
 	 */
-	private static final class WeakEntryReference<K, V> extends WeakReference<Entry<K, V>> implements Reference<K, V>
+	private static final class WeakEntryReference<K, V>
+		extends WeakReference<net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V>>
+		implements Reference<K, V>
 	{
 		private final int hash;
 		
 		private final Reference<K, V> nextReference;
 		
 		public WeakEntryReference(
-			Entry<K, V> entry, int hash, Reference<K, V> next,
-			ReferenceQueue<Entry<K, V>> queue)
+			net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V> entry,
+			int hash,
+			Reference<K, V> next,
+			ReferenceQueue<net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap.Entry<K, V>> queue)
 		{
 			
 			super(entry, queue);

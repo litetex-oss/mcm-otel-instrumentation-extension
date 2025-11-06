@@ -17,7 +17,7 @@ public class NetworkConnectionsSampler extends AbstractMetricSampler<ObservableL
 	protected void sample(final ObservableLongMeasurement measurement)
 	{
 		measurement.record(
-			this.server.getNetworkIo().getConnections().size(),
+			this.server.getConnection().getConnections().size(),
 			Attributes.of(CommonAttributeKeys.VARIANT, "current"));
 	}
 }

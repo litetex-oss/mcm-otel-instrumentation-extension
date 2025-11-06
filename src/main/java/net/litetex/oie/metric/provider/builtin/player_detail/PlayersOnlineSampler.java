@@ -13,9 +13,9 @@ import net.litetex.oie.metric.CommonAttributeKeys;
 import net.litetex.oie.metric.measurement.TypedObservableLongMeasurement;
 import net.litetex.oie.metric.provider.CachedMetricSampler;
 import net.litetex.oie.metric.provider.PausableNullSettingMetricSampler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.GameMode;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.GameType;
 
 
 public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long, TypedObservableLongMeasurement>
@@ -32,7 +32,7 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 	@Override
 	protected Map<Attributes, Long> getSamples()
 	{
-		return this.server.getPlayerManager().getPlayerList()
+		return this.server.getPlayerList().getPlayers()
 			.stream()
 			.collect(Collectors.toMap(
 				player -> this.playerAttributeCache.computeIfAbsent(
@@ -63,13 +63,13 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 	
 	protected record AttributeCacheKey(
 		GameProfile profile,
-		ServerWorld world,
-		GameMode gameMode
+		ServerLevel world,
+		GameType gameMode
 	)
 	{
-		public AttributeCacheKey(final ServerPlayerEntity player)
+		public AttributeCacheKey(final ServerPlayer player)
 		{
-			this(player.getGameProfile(), player.getEntityWorld(), player.interactionManager.getGameMode());
+			this(player.getGameProfile(), player.level(), player.gameMode.getGameModeForPlayer());
 		}
 	}
 }

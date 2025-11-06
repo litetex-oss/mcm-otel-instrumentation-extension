@@ -15,18 +15,18 @@ import io.opentelemetry.api.metrics.LongCounter;
 import net.litetex.oie.OIE;
 import net.litetex.oie.OIECustomMetricInitializer;
 import net.litetex.oie.metric.CommonAttributeKeys;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.function.Finishable;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.profiling.jfr.FlightProfiler;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.ChunkGenerationStep;
-import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.chunk.GenerationDependencies;
-import net.minecraft.world.chunk.GenerationTask;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.profiling.jfr.JvmProfiler;
+import net.minecraft.util.profiling.jfr.callback.ProfiledDuration;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.status.ChunkDependencies;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
+import net.minecraft.world.level.chunk.status.ChunkStatusTask;
+import net.minecraft.world.level.chunk.status.ChunkStep;
 
 
-@Mixin(ChunkGenerationStep.class)
+@Mixin(ChunkStep.class)
 public abstract class ChunkGenerationStepMixin
 {
 	@Unique
@@ -44,10 +44,10 @@ public abstract class ChunkGenerationStepMixin
 	@Inject(method = "<init>", at = @At("RETURN"))
 	public void init(
 		final ChunkStatus chunkStatus,
-		final GenerationDependencies generationDependencies,
-		final GenerationDependencies generationDependencies2,
+		final ChunkDependencies generationDependencies,
+		final ChunkDependencies generationDependencies2,
 		final int i,
-		final GenerationTask generationTask,
+		final ChunkStatusTask generationTask,
 		final CallbackInfo ci)
 	{
 		OIECustomMetricInitializer.executeWhenReady(
@@ -59,24 +59,24 @@ public abstract class ChunkGenerationStepMixin
 	}
 	
 	@Redirect(
-		method = "run",
-		at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/jfr/FlightProfiler;"
-			+ "startChunkGenerationProfiling(Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/registry/RegistryKey;"
-			+ "Ljava/lang/String;)Lnet/minecraft/util/function/Finishable;")
+		method = "apply",
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/jfr/JvmProfiler;onChunkGenerate"
+			+ "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/resources/ResourceKey;Ljava/lang/String;)"
+			+ "Lnet/minecraft/util/profiling/jfr/callback/ProfiledDuration;")
 	)
-	public Finishable redirectFlightProfilerStartChunkGenerationProfiling(
-		final FlightProfiler profiler,
+	public ProfiledDuration redirectFlightProfilerStartChunkGenerationProfiling(
+		final JvmProfiler profiler,
 		final ChunkPos pos,
-		final RegistryKey<World> worldRegistryKey,
+		final ResourceKey<Level> worldRegistryKey,
 		final String id)
 	{
 		if(timesCalled == null && duration == null)
 		{
-			return profiler.startChunkGenerationProfiling(pos, worldRegistryKey, id);
+			return profiler.onChunkGenerate(pos, worldRegistryKey, id);
 		}
 		
 		final Attributes attributes = Attributes.builder()
-			.put(CommonAttributeKeys.WORLD, OIE.instance().formatIdentifier(worldRegistryKey.getValue()))
+			.put(CommonAttributeKeys.WORLD, OIE.instance().formatIdentifier(worldRegistryKey.location()))
 			.put(STATUS, id)
 			.put(STATUS_INDEX, (long)this.targetStatus.getIndex())
 			.build();
@@ -87,8 +87,8 @@ public abstract class ChunkGenerationStepMixin
 				attributes);
 		}
 		
-		final Finishable originalFinishable =
-			profiler.startChunkGenerationProfiling(pos, worldRegistryKey, id);
+		final ProfiledDuration originalFinishable =
+			profiler.onChunkGenerate(pos, worldRegistryKey, id);
 		if(duration == null)
 		{
 			return originalFinishable;

@@ -4,7 +4,7 @@ import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.ObservableDoubleMeasurement;
 import net.litetex.oie.metric.CommonAttributeKeys;
 import net.litetex.oie.metric.provider.AbstractMetricSampler;
-import net.minecraft.network.ClientConnection;
+import net.minecraft.network.Connection;
 
 
 public class NetworkConnectionsAvgPacketsReceivedSampler extends AbstractMetricSampler<ObservableDoubleMeasurement>
@@ -18,8 +18,8 @@ public class NetworkConnectionsAvgPacketsReceivedSampler extends AbstractMetricS
 	protected void sample(final ObservableDoubleMeasurement measurement)
 	{
 		measurement.record(
-			this.server.getNetworkIo().getConnections().stream()
-				.mapToDouble(ClientConnection::getAveragePacketsReceived)
+			this.server.getConnection().getConnections().stream()
+				.mapToDouble(Connection::getAverageReceivedPackets)
 				.sum(),
 			Attributes.of(CommonAttributeKeys.VARIANT, "average"));
 	}

@@ -15,7 +15,8 @@ import net.minecraft.server.MinecraftServer;
 public abstract class MinecraftServerStartStopMixin
 {
 	@Inject(at = @At(value = "INVOKE",
-		target = "Lnet/minecraft/server/MinecraftServer;createMetadata()Lnet/minecraft/server/ServerMetadata;",
+		target = "Lnet/minecraft/server/MinecraftServer;buildServerStatus()"
+			+ "Lnet/minecraft/network/protocol/status/ServerStatus;",
 		ordinal = 0),
 		method = "runServer")
 	@SuppressWarnings("javabugs:S6320")
@@ -27,7 +28,7 @@ public abstract class MinecraftServerStartStopMixin
 		}
 	}
 	
-	@Inject(at = @At("HEAD"), method = "shutdown")
+	@Inject(at = @At("HEAD"), method = "stopServer")
 	private void beforeShutdownServer(final CallbackInfo info)
 	{
 		if(OIE.instance() != null)

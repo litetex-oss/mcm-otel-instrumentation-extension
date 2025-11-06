@@ -21,9 +21,9 @@ import net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHash
 import net.litetex.oie.metric.provider.MetricSampler;
 import net.litetex.oie.metric.provider.SamplerProvider;
 import net.minecraft.SharedConstants;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
+import net.minecraft.server.level.ServerLevel;
 
 
 public class OIE
@@ -126,7 +126,7 @@ public class OIE
 				Attributes.builder()
 					.put(
 						AttributeKey.stringKey("minecraft_version"),
-						SharedConstants.getGameVersion().name())
+						SharedConstants.getCurrentVersion().name())
 					.put(
 						AttributeKey.stringKey("mod_loader_name"),
 						"fabric")
@@ -162,11 +162,11 @@ public class OIE
 		}
 	}
 	
-	private final Map<Identifier, String> formatCache = new ConcurrentReferenceHashMap<>(
+	private final Map<ResourceLocation, String> formatCache = new ConcurrentReferenceHashMap<>(
 		16,
 		ConcurrentReferenceHashMap.ReferenceType.WEAK);
 	
-	public String formatIdentifier(final Identifier identifier)
+	public String formatIdentifier(final ResourceLocation identifier)
 	{
 		return this.formatCache.computeIfAbsent(
 			identifier,
@@ -175,9 +175,9 @@ public class OIE
 				: id.toString());
 	}
 	
-	public String formatWorldName(final ServerWorld world)
+	public String formatWorldName(final ServerLevel world)
 	{
-		return this.formatIdentifier(world.getRegistryKey().getValue());
+		return this.formatIdentifier(world.dimension().location());
 	}
 	
 	public static OIE instance()
