@@ -17,7 +17,7 @@ public class ServerPausedSamplerCondition
 	
 	public boolean shouldSample(final MinecraftServer server)
 	{
-		final boolean isRunning = server.idleTickCount < this.pauseWhenEmptyTicks;
+		final boolean isRunning = server.emptyTicks < this.pauseWhenEmptyTicks;
 		final boolean wasRunningBefore = this.wasRunning;
 		this.wasRunning = isRunning;
 		return isRunning || wasRunningBefore;
@@ -25,11 +25,11 @@ public class ServerPausedSamplerCondition
 	
 	public static ServerPausedSamplerCondition create(final MinecraftServer server)
 	{
-		if(server.getPauseWhenEmptySeconds() <= 0)
+		if(server.pauseWhenEmptySeconds() <= 0)
 		{
 			return null;
 		}
 		
-		return new ServerPausedSamplerCondition(server.getPauseWhenEmptySeconds() * TPS);
+		return new ServerPausedSamplerCondition(server.pauseWhenEmptySeconds() * TPS);
 	}
 }

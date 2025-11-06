@@ -1,3 +1,8 @@
+# 1.2.3
+* Migrated to "official" mappings in preparation for the removal of obfuscation
+* Now targeting 1.21.10
+* Updated dependencies
+
 # 1.2.2
 * Fixed a crash when the server is stopped
 

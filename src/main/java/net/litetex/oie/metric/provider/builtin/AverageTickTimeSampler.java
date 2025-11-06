@@ -14,6 +14,6 @@ public class AverageTickTimeSampler extends AbstractMetricSampler<ObservableDoub
 	@Override
 	protected void sample(final ObservableDoubleMeasurement measurement)
 	{
-		measurement.record(this.server.getAverageTickTime());
+		measurement.record(this.server.getCurrentSmoothedTickTime());
 	}
 }

@@ -10,13 +10,13 @@ import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.LongCounter;
 import net.litetex.oie.OIECustomMetricInitializer;
-import net.minecraft.network.ClientConnection;
-import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerHandshakeNetworkHandler;
+import net.minecraft.server.network.ServerHandshakePacketListenerImpl;
 
 
-@Mixin(ServerHandshakeNetworkHandler.class)
+@Mixin(ServerHandshakePacketListenerImpl.class)
 public abstract class ServerHandshakeNetworkHandlerMixin
 {
 	@Unique
@@ -26,14 +26,14 @@ public abstract class ServerHandshakeNetworkHandlerMixin
 	private LongCounter counter;
 	
 	@Inject(method = "<init>", at = @At("RETURN"))
-	public void init(final MinecraftServer server, final ClientConnection connection, final CallbackInfo ci)
+	public void init(final MinecraftServer server, final Connection connection, final CallbackInfo ci)
 	{
 		OIECustomMetricInitializer.executeWhenReady(creator ->
 			this.counter = creator.createLongCounter("handshakes"));
 	}
 	
-	@Inject(method = "onHandshake", at = @At("HEAD"))
-	public void onHandShake(final HandshakeC2SPacket packet, final CallbackInfo ci)
+	@Inject(method = "handleIntention", at = @At("HEAD"))
+	public void onHandShake(final ClientIntentionPacket packet, final CallbackInfo ci)
 	{
 		if(this.counter != null)
 		{
@@ -41,7 +41,7 @@ public abstract class ServerHandshakeNetworkHandlerMixin
 				1,
 				Attributes.of(
 					INTENT,
-					packet.intendedState().name().toLowerCase()));
+					packet.intention().name().toLowerCase()));
 		}
 	}
 }

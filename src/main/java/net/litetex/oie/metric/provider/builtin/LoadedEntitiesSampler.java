@@ -9,15 +9,15 @@ import io.opentelemetry.api.common.Attributes;
 import net.litetex.oie.metric.measurement.TypedObservableLongMeasurement;
 import net.litetex.oie.metric.provider.CachedMetricSampler;
 import net.litetex.oie.metric.provider.PausableNullSettingMetricSampler;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 
 
 public class LoadedEntitiesSampler extends PausableNullSettingMetricSampler<Long, TypedObservableLongMeasurement>
 {
-	private final Map<EntityType<?>, Identifier> cachedEntityTypeIds = new WeakHashMap<>();
+	private final Map<EntityType<?>, ResourceLocation> cachedEntityTypeIds = new WeakHashMap<>();
 	
 	public LoadedEntitiesSampler()
 	{
@@ -27,25 +27,25 @@ public class LoadedEntitiesSampler extends PausableNullSettingMetricSampler<Long
 	@Override
 	protected Map<Attributes, Long> getSamples()
 	{
-		return this.server.worlds.values()
+		return this.server.levels.values()
 			.stream()
 			.flatMap(world -> {
 				final String formattedWorldName = this.oie().formatWorldName(world);
 				
-				return StreamSupport.stream(world.getEntityLookup().iterate().spliterator(), false)
+				return StreamSupport.stream(world.getEntities().getAll().spliterator(), false)
 					.collect(Collectors.groupingBy(Entity::getType))
 					.entrySet()
 					.stream()
 					.map(e -> Map.entry(
 						Attributes.builder()
 							.put("world", formattedWorldName)
-							.put("group", e.getKey().getSpawnGroup().getName())
+							.put("group", e.getKey().getCategory().getName())
 							.put(
 								"type",
 								this.oie().formatIdentifier(
 									this.cachedEntityTypeIds.computeIfAbsent(
 										e.getKey(),
-										Registries.ENTITY_TYPE::getId)))
+										BuiltInRegistries.ENTITY_TYPE::getKey)))
 							.build(),
 						(long)e.getValue().size()
 					));
