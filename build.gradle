@@ -12,6 +12,8 @@ ext {
     checkstyleVersion = '12.2.0'
 
     pmdVersion = '7.19.0'
+
+    otelApiVersion = '1.57.0'
 }
 
 version = project.mod_version
@@ -22,7 +24,7 @@ base {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/template-placeholder.accesswidener")
+    accessWidenerPath = file("src/main/resources/oie.accesswidener")
     log4jConfigs.from(file("src/dev/log4j2.xml"))
 }
 
@@ -31,6 +33,35 @@ configurations.checkstyle {
     resolutionStrategy.capabilitiesResolution.withCapability("com.google.collections:google-collections") {
         select("com.google.guava:guava:0")
     }
+}
+
+repositories {
+    // Temporarily disabled until https://github.com/lucko/spark/issues/514 is fixed
+//    exclusiveContent {
+//        forRepository {
+//            maven {
+//                name = "OSSRH Snapshots"
+//                url = "https://oss.sonatype.org/content/repositories/snapshots"
+//            }
+//        }
+//        filter {
+//            includeModule('me.lucko', 'spark-api')
+//        }
+//    }
+    // https://support.modrinth.com/en/articles/8801191-modrinth-maven
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    // Fallback (fixes Renovate)
+    mavenCentral()
 }
 
 dependencies {
@@ -42,6 +73,20 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    include implementation("io.opentelemetry:opentelemetry-api:${otelApiVersion}")
+    // Transitive
+    include "io.opentelemetry:opentelemetry-context:${otelApiVersion}"
+
+    // compileOnly "me.lucko:spark-api:0.1-SNAPSHOT"
+    modCompileOnly "maven.modrinth:spark:1.10.152-fabric"
+
+    // Only needed during development
+
+    // Remove comments to test with spark
+//    modLocalRuntime "maven.modrinth:spark:1.10.138-fabric"
+//    modLocalRuntime "net.fabricmc.fabric-api:fabric-api:0.126.1+1.21.6"
+//    modLocalRuntime "me.lucko:fabric-permissions-api:0.3.3"
 }
 
 processResources {
@@ -156,6 +201,9 @@ modrinth {
     additionalFiles = [sourcesJar]
     syncBodyFrom = rootProject.file("README.md").text
     changelog = System.getenv("MODRINTH_CHANGELOG_TEXT")
+    dependencies {
+        optional.project 'spark'
+    }
 }
 
 signing {
