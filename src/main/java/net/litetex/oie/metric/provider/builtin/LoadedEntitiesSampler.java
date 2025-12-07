@@ -10,14 +10,14 @@ import net.litetex.oie.metric.measurement.TypedObservableLongMeasurement;
 import net.litetex.oie.metric.provider.CachedMetricSampler;
 import net.litetex.oie.metric.provider.PausableNullSettingMetricSampler;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 
 
 public class LoadedEntitiesSampler extends PausableNullSettingMetricSampler<Long, TypedObservableLongMeasurement>
 {
-	private final Map<EntityType<?>, ResourceLocation> cachedEntityTypeIds = new WeakHashMap<>();
+	private final Map<EntityType<?>, Identifier> cachedEntityTypeIds = new WeakHashMap<>();
 	
 	public LoadedEntitiesSampler()
 	{
