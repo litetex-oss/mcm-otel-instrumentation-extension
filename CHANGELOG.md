@@ -1,3 +1,6 @@
+# 1.3.0
+* Updated to 1.21.11
+
 # 1.2.3
 * Migrated to "official" mappings in preparation for the removal of obfuscation
 * Now targeting 1.21.10
