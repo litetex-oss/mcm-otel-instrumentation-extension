@@ -76,7 +76,7 @@ public abstract class ChunkGenerationStepMixin
 		}
 		
 		final Attributes attributes = Attributes.builder()
-			.put(CommonAttributeKeys.WORLD, OIE.instance().formatIdentifier(worldRegistryKey.location()))
+			.put(CommonAttributeKeys.WORLD, OIE.instance().formatIdentifier(worldRegistryKey.identifier()))
 			.put(STATUS, id)
 			.put(STATUS_INDEX, (long)this.targetStatus.getIndex())
 			.build();

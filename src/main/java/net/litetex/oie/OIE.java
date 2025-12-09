@@ -21,7 +21,7 @@ import net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHash
 import net.litetex.oie.metric.provider.MetricSampler;
 import net.litetex.oie.metric.provider.SamplerProvider;
 import net.minecraft.SharedConstants;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 
@@ -162,11 +162,11 @@ public class OIE
 		}
 	}
 	
-	private final Map<ResourceLocation, String> formatCache = new ConcurrentReferenceHashMap<>(
+	private final Map<Identifier, String> formatCache = new ConcurrentReferenceHashMap<>(
 		16,
 		ConcurrentReferenceHashMap.ReferenceType.WEAK);
 	
-	public String formatIdentifier(final ResourceLocation identifier)
+	public String formatIdentifier(final Identifier identifier)
 	{
 		return this.formatCache.computeIfAbsent(
 			identifier,
@@ -177,7 +177,7 @@ public class OIE
 	
 	public String formatWorldName(final ServerLevel world)
 	{
-		return this.formatIdentifier(world.dimension().location());
+		return this.formatIdentifier(world.dimension().identifier());
 	}
 	
 	public static OIE instance()
