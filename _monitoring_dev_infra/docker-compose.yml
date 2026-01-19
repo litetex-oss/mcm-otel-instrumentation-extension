@@ -42,7 +42,7 @@ services:
       - 4318:4318
   
   mimir:
-    image: grafana/mimir:3.0.1
+    image: grafana/mimir:3.0.2
     restart: unless-stopped
     user: 0:0
     command: "--config.file=/config/config.yml"
