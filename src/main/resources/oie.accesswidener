@@ -1,0 +1,5 @@
+accessWidener v2 named
+accessible field net/minecraft/server/MinecraftServer emptyTicks I
+accessible method net/minecraft/server/MinecraftServer pauseWhenEmptySeconds ()I
+accessible method net/minecraft/server/level/ServerLevel getEntities ()Lnet/minecraft/world/level/entity/LevelEntityGetter;
+accessible field net/minecraft/server/MinecraftServer levels Ljava/util/Map;
