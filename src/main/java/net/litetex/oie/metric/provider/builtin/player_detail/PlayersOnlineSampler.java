@@ -67,7 +67,7 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 		GameType gameMode
 	)
 	{
-		public AttributeCacheKey(final ServerPlayer player)
+		AttributeCacheKey(final ServerPlayer player)
 		{
 			this(player.getGameProfile(), player.level(), player.gameMode.getGameModeForPlayer());
 		}
