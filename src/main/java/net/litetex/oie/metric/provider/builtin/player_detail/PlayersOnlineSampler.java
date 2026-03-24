@@ -44,7 +44,7 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 						.put(GAME_MODE, key.gameMode().name())
 						.build()
 				),
-				player -> (long)1));
+				_ -> (long)1));
 	}
 	
 	@Override
