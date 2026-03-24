@@ -94,7 +94,7 @@ Further documentation can be found directly inside the corresponding [Java Code]
 Add the following to ``build.gradle``:
 ```groovy
 dependencies {
-    modImplementation 'net.litetex.mcm:otel-instrumentation-extension:<version>'
+    implementation 'net.litetex.mcm:otel-instrumentation-extension:<version>'
     // Further documentation: https://wiki.fabricmc.net/documentation:fabric_loom
 }
 ```

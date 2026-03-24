@@ -1,3 +1,6 @@
+# 1.4.0
+* Updated to 26.1
+
 # 1.3.0
 * Updated to 1.21.11
 
