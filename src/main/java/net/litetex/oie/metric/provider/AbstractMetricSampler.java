@@ -60,7 +60,7 @@ public abstract class AbstractMetricSampler<M extends ObservableMeasurement> imp
 	
 	protected static String buildMetricName(final String name)
 	{
-		return OIE.instance().config().getMetrics().getPrefix() + name;
+		return OIE.instance().config().metrics().prefix() + name;
 	}
 	
 	protected OIE oie()

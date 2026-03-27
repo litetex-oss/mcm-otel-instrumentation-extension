@@ -71,9 +71,42 @@ You may also have a look at the corresponding [development setup](https://github
 
 ## Configuration
 
-The default configuration of the mod should usually work out of the box.<br/>
-If you wish to customize it, open ``config/oie.json`` and tune the corresponding values.<br/>
-Further documentation can be found directly inside the corresponding [Java Code](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/src/main/java/net/litetex/oie/config/).
+<details><summary>The configuration is dynamically loaded from (sorted by highest priority)</summary>
+
+* Environment variables 
+    * prefixed with ``OIE_``
+    * all properties are in UPPERCASE and use `_` instead of `.` or `-`
+* System properties
+    * prefixed with ``oie.``
+* A configuration file located in ``.config/oie.json``
+
+</details>
+
+<details><summary>Full list of configuration options</summary>
+
+_Please note that the preconfigured values usually work out of the box.<br/>_
+_You should know exactly what you're doing when doing modifications._
+
+##### General
+
+| Property | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `instrumentation-name` | `String` | `minecraft` | Used as `instrumentationScopeName`. _A name uniquely identifying the instrumentation scope, such as the instrumentation library, package, or fully qualified class name. Must not be null._ |
+| `strip-identifier-namespaces` | `bool` | `true` | Removes namespaces from `Identifier`. Disabling this causes identifiers to look like this `minecraft:overworld` instead of `overworld`.<br/>Usually only required for heavily modded servers. |
+
+##### Metrics
+
+| Property | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `metrics.freeze-when-server-paused` | `bool` | `true` | Stop fetching certain metrics when the server is paused and uses previously cached values. This optimization usually improves the sampling speed for affected metrics by >10x.<br/>Outcomes vary and depend on the work required for fetching and how often the server enters idle mode.<br>_If the server is not using `pauseWhenEmptySeconds` (set to <= 0) this optimization will be ignored._ |
+| `metrics.prefix` | `String` | `minecraft_` | Prefix for all metrics |
+| `metrics.counter-suffix` | `String` | `_total` | Suffix for counters |
+| `metrics.enabled-only` | `List<String>` | - | Only enables the specified metrics.<br/>_ALL OTHER METRICS WILL BE DISABLED!_ |
+| `metrics.enabled-additionally` | `List<String>` | - | Additionally enables the specified metrics.<br/>_This is only relevant for metrics that are not enabled out of the box._ |
+| `metrics.disabled` | `List<String>` | - | Disables the specified metrics |
+| `metrics.enable-player-details-samplers` | `bool` | `true` | Determines if the `PlayerDetailsSamplers` (e.g. Online, TotalXP, XPLevel) are enabled |
+
+</details>
 
 <!-- modrinth_exclude.start -->
 

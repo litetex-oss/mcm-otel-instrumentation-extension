@@ -1,3 +1,9 @@
+# 2.0.0
+* Changed configuration system
+  * Configuration is now done using snake-case instead of camelCase
+  * It's now possible to use system properties and environment variables for configuration
+  * See README for details
+
 # 1.4.0
 * Updated to 26.1
 

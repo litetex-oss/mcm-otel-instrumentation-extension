@@ -28,7 +28,7 @@ public class OIEMetricsCreator
 	public OIEMetricsCreator(final OIE oie)
 	{
 		this.oie = oie;
-		this.metricsConfig = oie.config().getMetrics();
+		this.metricsConfig = oie.config().metrics();
 	}
 	
 	public Meter getMeter()
@@ -38,21 +38,21 @@ public class OIEMetricsCreator
 	
 	protected String createMetricName(final String name)
 	{
-		return this.metricsConfig.getPrefix() + name;
+		return this.metricsConfig.prefix() + name;
 	}
 	
 	public boolean isMetricActive(final String name)
 	{
-		if(!this.metricsConfig.getEnabledOnly().isEmpty())
+		if(!this.metricsConfig.enabledOnly().isEmpty())
 		{
-			return this.metricsConfig.getEnabledOnly().contains(name);
+			return this.metricsConfig.enabledOnly().contains(name);
 		}
 		
-		if(this.metricsConfig.getDisabled().contains(name))
+		if(this.metricsConfig.disabled().contains(name))
 		{
 			return false;
 		}
-		if(this.metricsConfig.getEnabledAdditionally().contains(name))
+		if(this.metricsConfig.enabledAdditionally().contains(name))
 		{
 			return true;
 		}
@@ -92,7 +92,7 @@ public class OIEMetricsCreator
 		return this.createMetric(
 			Meter::counterBuilder,
 			LongCounterBuilder::build,
-			name + this.metricsConfig.getCounterSuffix(),
+			name + this.metricsConfig.counterSuffix(),
 			customizeBuilder);
 	}
 	
