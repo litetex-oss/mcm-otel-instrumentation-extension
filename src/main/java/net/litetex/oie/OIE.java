@@ -20,6 +20,7 @@ import net.litetex.oie.config.Config;
 import net.litetex.oie.external.org.springframework.util.ConcurrentReferenceHashMap;
 import net.litetex.oie.metric.provider.MetricSampler;
 import net.litetex.oie.metric.provider.SamplerProvider;
+import net.litetex.oie.shared.config.Configuration;
 import net.minecraft.SharedConstants;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
@@ -38,9 +39,9 @@ public class OIE
 	private List<MetricSampler> registeredSamplers;
 	private LongGauge up;
 	
-	public OIE(final Config config)
+	public OIE(final Configuration lowLevelConfig)
 	{
-		this.config = config;
+		this.config = new Config(lowLevelConfig);
 		this.metricsCreator = new OIEMetricsCreator(this);
 		
 		this.validateOpenTelemetry();
@@ -53,7 +54,7 @@ public class OIE
 	
 	public String instrumentationName()
 	{
-		return this.config().getInstrumentationName();
+		return this.config().instrumentationName();
 	}
 	
 	public void validateOpenTelemetry()
@@ -170,7 +171,7 @@ public class OIE
 	{
 		return this.formatCache.computeIfAbsent(
 			identifier,
-			id -> this.config.isStripIdentifierNamespaces()
+			id -> this.config.stripIdentifierNamespaces()
 				? id.getPath()
 				: id.toString());
 	}

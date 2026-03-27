@@ -13,7 +13,7 @@ public class BuiltInPlayerDetailSamplerProvider implements SamplerProvider
 	@Override
 	public boolean applicable(final MinecraftServer server)
 	{
-		return OIE.instance().config().getMetrics().isEnablePlayerDetailsSamplers();
+		return OIE.instance().config().metrics().enablePlayerDetailsSamplers();
 	}
 	
 	@Override
