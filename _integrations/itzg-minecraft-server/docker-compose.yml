@@ -1,0 +1,61 @@
+services:
+  mc-server:
+    build:
+      context: server/_build
+    container_name: mc-server
+    environment:
+      # https://docker-minecraft-server.readthedocs.io/en/latest/variables/
+      EULA: "true"
+      # Memory is determined from the container memory
+      MEMORY: ""
+      # EnableDynamicAgentLoading -> For Spark
+      JVM_XX_OPTS: "-XX:MaxRAMPercentage=80 -XX:+EnableDynamicAgentLoading"
+      # OTEL Docs: 
+      # https://opentelemetry.io/docs/languages/java/configuration
+      # https://opentelemetry.io/docs/zero-code/java/agent
+      # Logs are already received via Docker
+      # ProcessResourceProvider is disabled because otherwise the complete command line is sent to the server
+      # Export every 10s so that we see metrics more often
+      JVM_OPTS: >-
+        -Dotel.service.name=minecraft-ota
+        -Dotel.exporter.otlp.endpoint=http://otelc:4318
+        -Dotel.logs.exporter=none
+        -Dotel.java.disabled.resource.providers=io.opentelemetry.instrumentation.resources.ProcessResourceProvider
+        -Dotel.resource.attributes=service.instance.id=mc-docker-server
+        -Dotel.metric.export.interval=10000
+      ## Server
+      TYPE: FABRIC
+      # NOTE: ':' means that a specific version was selected because there was no latest matching version! MAY NEED AN UPDATE in the future!
+      MODRINTH_PROJECTS: otel-instrumentation-extension,fabric-api,spark,no-chat-reports
+      ## Game
+      VERSION: 1.21.5
+      ## World
+      MODE: creative
+      DIFFICULTY: hard
+      ## Other server properties
+      # Disable dumb new chat system, which allows reading of private conversations...
+      ENFORCE_SECURE_PROFILE: "false"
+      # Disable telemetry
+      SNOOPER_ENABLED: "false"
+      SEED: "3421516" # otel
+    env_file:
+      - ./server/secrets.env
+    networks:
+      - minecraft_net
+      - monitoring_net
+    ports:
+      - "25565:25565"
+    volumes:
+      - "./_data/minecraft/data:/data"
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+
+networks:
+  minecraft_net:
+    name: "minecraft-net"
+    enable_ipv6: true
+  monitoring_net:
+    name: "monitoring-net"
+    external: true
