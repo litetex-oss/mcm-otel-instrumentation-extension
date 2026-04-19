@@ -13,7 +13,7 @@ ext {
 
     pmdVersion = '7.23.0'
 
-    otelApiVersion = '1.60.1'
+    otelApiVersion = '1.61.0'
 }
 
 version = project.mod_version
