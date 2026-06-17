@@ -1,25 +1,133 @@
 <!-- modrinth_exclude.start -->
 
-[![Version](https://img.shields.io/modrinth/v/template-placeholder)](https://modrinth.com/mod/template-placeholder)
-[![Build](https://img.shields.io/github/actions/workflow/status/litetex-oss/template-placeholder/check-build.yml?branch=dev)](https://github.com/litetex-oss/template-placeholder/actions/workflows/check-build.yml?query=branch%3Adev)
+[![Version](https://img.shields.io/modrinth/v/otel-instrumentation-extension)](https://modrinth.com/mod/otel-instrumentation-extension)
+[![Build](https://img.shields.io/github/actions/workflow/status/litetex-oss/mcm-otel-instrumentation-extension/check-build.yml?branch=dev)](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/actions/workflows/check-build.yml?query=branch%3Adev)
 
-# template-placeholder
+# OpenTelemetry Instrumentation Extension for FabricMC
 
 <!-- modrinth_exclude.end -->
 
-TODO
+OpenTelemetry can be used to [report various monitoring data (including metrics, logs and traces)](https://opentelemetry.io/docs/what-is-opentelemetry/) and is a de-facto industry standard.
+
+This mod provides additional instrumentation for the [OpenTelemetry JavaAgent](https://opentelemetry.io/docs/zero-code/java/agent/) so that various game metrics can be reported. The overall functionality is similar to [``fabric-exporter``](https://github.com/ruscalworld/fabric-exporter).
+
+<details><summary>Instrumented/Reported metrics</summary>
+
+* MSPT/TPS
+* Loaded chunks
+* Server state
+* Networking
+  * connections
+  * handshakes
+  * packets sent/received
+* Chunk generation
+* Entities
+  * grouped by type, spawn ground and world/dimension
+* Players
+  * by world
+  * online
+  * total xp (score)
+  * xp level
+* Runtime
+  * game version
+  * Fabric version
+* Optional data from [spark](https://github.com/lucko/spark)
+
+</details>
+
+## Setup 
+
+1. Make sure you have an endpoint where OpenTelemetry data can be ingested.<br/>This could be a [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) hosted by you or by someone else (e.g. in the [Grafana Cloud](https://grafana.com/docs/grafana-cloud/monitor-applications/application-observability/collector/)).
+2. [Setup the OpenTelemetry Java Agent](https://opentelemetry.io/docs/zero-code/java/agent/getting-started/) so that it sends data to your ingestion service.
+3. Add the [OpenTelemetry Agent Helper Extension for Fabric](https://github.com/litetex-oss/otel-fabric-helper-extension).
+    * This is required so that the OpenTelemetry Agent is correctly detecting and utilizing the mod.
+4. Simply add and (optionally) configure this mod. It should work out of the box.
+5. Import the provided dashboard into Grafana
+    * From [Grafana Dashboards](https://grafana.com/grafana/dashboards/23234)
+    * From the [local demo in the repo](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/_monitoring_dev_infra/docker-compose.yml)
+
+<details><summary>Diagram showcasing how the overall infrastructure can look</summary>
+
+![Infra Overview](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/InfraOverview.svg)
+
+</details>
+
+You may also have a look at the corresponding [development setup](https://github.com/litetex-oss/mcm-otel-instrumentation-extension?tab=readme-ov-file#demo-for-development) as it contains an locally running deployment of the full infrastructure.
+
+<details><summary>Dashboard look</summary>
+
+![Overview](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-overview.jpg)
+![Network](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-network.jpg)
+![Chunk Generation](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-chunk-generation.jpg)
+![Entities](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-entities.jpg)
+![Player](https://raw.githubusercontent.com/litetex-oss/mcm-otel-instrumentation-extension/refs/heads/dev/assets/dashboard-players.jpg)
+
+</details>
+
+
+### Example [integrations](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/_integrations)
+
+* For [``itzg/minecraft-server``](https://github.com/itzg/docker-minecraft-server) see [here](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/tree/dev/_integrations/itzg-minecraft-server)
+
+## Configuration
+
+<details><summary>The configuration is dynamically loaded from (sorted by highest priority)</summary>
+
+* Environment variables 
+    * prefixed with ``OIE_``
+    * all properties are in UPPERCASE and use `_` instead of `.` or `-`
+* System properties
+    * prefixed with ``oie.``
+* A configuration file located in ``.config/oie.json``
+
+</details>
+
+<details><summary>Full list of configuration options</summary>
+
+_Please note that the preconfigured values usually work out of the box.<br/>_
+_You should know exactly what you're doing when doing modifications._
+
+##### General
+
+| Property | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `instrumentation-name` | `String` | `minecraft` | Used as `instrumentationScopeName`. _A name uniquely identifying the instrumentation scope, such as the instrumentation library, package, or fully qualified class name. Must not be null._ |
+| `strip-identifier-namespaces` | `bool` | `true` | Removes namespaces from `Identifier`. Disabling this causes identifiers to look like this `minecraft:overworld` instead of `overworld`.<br/>Usually only required for heavily modded servers. |
+
+##### Metrics
+
+| Property | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `metrics.freeze-when-server-paused` | `bool` | `true` | Stop fetching certain metrics when the server is paused and uses previously cached values. This optimization usually improves the sampling speed for affected metrics by >10x.<br/>Outcomes vary and depend on the work required for fetching and how often the server enters idle mode.<br>_If the server is not using `pauseWhenEmptySeconds` (set to <= 0) this optimization will be ignored._ |
+| `metrics.prefix` | `String` | `minecraft_` | Prefix for all metrics |
+| `metrics.counter-suffix` | `String` | `_total` | Suffix for counters |
+| `metrics.enabled-only` | `List<String>` | - | Only enables the specified metrics.<br/>_ALL OTHER METRICS WILL BE DISABLED!_ |
+| `metrics.enabled-additionally` | `List<String>` | - | Additionally enables the specified metrics.<br/>_This is only relevant for metrics that are not enabled out of the box._ |
+| `metrics.disabled` | `List<String>` | - | Disables the specified metrics |
+| `metrics.enable-player-details-samplers` | `bool` | `true` | Determines if the `PlayerDetailsSamplers` (e.g. Online, TotalXP, XPLevel) are enabled |
+
+</details>
 
 <!-- modrinth_exclude.start -->
 
+## Demo for development
+
+* Make sure that you have Docker and IntelliJ installed
+* Checkout the repository
+* [Download](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases) the OpenTelemetry JavaAgent and put it into the ``run`` folder
+* Go into [``_monitoring_dev_infra``](./_monitoring_dev_infra/) and start it with ``docker compose up``
+* Log in to Grafana at [``localhost:3000``](http://localhost:3000) (username and password are ``admin``)
+* Open IntelliJ and run the ``Minecraft Server (OTEL-AGENT)`` launcher
+
 ## Installation
-[Installation guide for the latest release](https://github.com/litetex-oss/template-placeholder/releases/latest#Installation)
+[Installation guide for the latest release](https://github.com/litetex-oss/mcm-otel-instrumentation-extension/releases/latest#Installation)
 
 ### Usage in other mods
 
 Add the following to ``build.gradle``:
 ```groovy
 dependencies {
-    implementation 'net.litetex.mcm:template-placeholder:<version>'
+    implementation 'net.litetex.mcm:otel-instrumentation-extension:<version>'
     // Further documentation: https://wiki.fabricmc.net/documentation:fabric_loom
 }
 ```
@@ -30,5 +138,10 @@ dependencies {
 
 ## Contributing
 See the [contributing guide](./CONTRIBUTING.md) for detailed instructions on how to get started with our project.
+
+### Related documentation
+* [OTEL - Extending instrumentations with the API](https://opentelemetry.io/docs/zero-code/java/agent/api/)
+* [OTEL - SDK configuration](https://opentelemetry.io/docs/languages/java/configuration)
+* [OTEL - Disable default instrumentation](https://opentelemetry.io/docs/zero-code/java/agent/disable/#enable-manual-instrumentation-only)
 
 <!-- modrinth_exclude.end -->
