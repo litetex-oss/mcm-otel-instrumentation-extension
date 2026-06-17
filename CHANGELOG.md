@@ -1,3 +1,6 @@
+# 2.1.0
+* Updated to 26.2
+
 # 2.0.0
 * Changed configuration system
   * Configuration is now done using snake-case instead of camelCase
