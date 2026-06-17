@@ -43,11 +43,11 @@ public abstract class ChunkGenerationStepMixin
 	
 	@Inject(method = "<init>", at = @At("RETURN"))
 	public void init(
-		final ChunkStatus chunkStatus,
-		final ChunkDependencies generationDependencies,
-		final ChunkDependencies generationDependencies2,
-		final int i,
-		final ChunkStatusTask generationTask,
+		final ChunkStatus targetStatus,
+		final ChunkDependencies directDependencies,
+		final ChunkDependencies accumulatedDependencies,
+		final int blockStateWriteRadius,
+		final ChunkStatusTask task,
 		final CallbackInfo ci)
 	{
 		OIECustomMetricInitializer.executeWhenReady(
@@ -107,5 +107,5 @@ public abstract class ChunkGenerationStepMixin
 	
 	@Shadow
 	@Final
-	ChunkStatus targetStatus;
+	private ChunkStatus targetStatus;
 }
