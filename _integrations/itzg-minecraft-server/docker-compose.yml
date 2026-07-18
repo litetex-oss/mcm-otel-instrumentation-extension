@@ -4,12 +4,23 @@ services:
       context: server/_build
     container_name: mc-server
     environment:
+      JVM_DD_OPTS: java.net.preferIPv6Addresses=true
+      JAVA_TOOL_OPTIONS: -Djava.net.preferIPv6Addresses=true --enable-native-access=ALL-UNNAMED
       # https://docker-minecraft-server.readthedocs.io/en/latest/variables/
       EULA: "true"
       # Memory is determined from the container memory
       MEMORY: ""
+      # Halved Min/MaxHeapFreeRatio to halve memory peaks
       # EnableDynamicAgentLoading -> For Spark
-      JVM_XX_OPTS: "-XX:MaxRAMPercentage=80 -XX:+EnableDynamicAgentLoading"
+      # CompactObjectHeaders -> Requires less memory
+      # UseStringDeduplication -> Requires less memory
+      JVM_XX_OPTS: >-
+        -XX:MaxRAMPercentage=80
+        -XX:MinHeapFreeRatio=30
+        -XX:MaxHeapFreeRatio=50
+        -XX:+EnableDynamicAgentLoading
+        -XX:+UseCompactObjectHeaders
+        -XX:+UseStringDeduplication
       # OTEL Docs: 
       # https://opentelemetry.io/docs/languages/java/configuration
       # https://opentelemetry.io/docs/zero-code/java/agent
@@ -26,9 +37,13 @@ services:
       ## Server
       TYPE: FABRIC
       # NOTE: ':' means that a specific version was selected because there was no latest matching version! MAY NEED AN UPDATE in the future!
-      MODRINTH_PROJECTS: otel-instrumentation-extension,fabric-api,spark,no-chat-reports
+      MODRINTH_PROJECTS: |
+        otel-instrumentation-extension
+        fabric-api
+        spark
+        no-chat-reports
       ## Game
-      VERSION: 1.21.5
+      VERSION: '26.2'
       ## World
       MODE: creative
       DIFFICULTY: hard
@@ -37,25 +52,36 @@ services:
       ENFORCE_SECURE_PROFILE: "false"
       # Disable telemetry
       SNOOPER_ENABLED: "false"
+      # Prevent anonymous detection who is on the server
+      # Might be utilized by things like phishing or tracking bots when enabled
+      # Also slightly reduces server load
+      HIDE_ONLINE_PLAYERS: "true"
+      # Mod config
+      # Spark
+      SPARK_BACKGROUNDPROFILERINTERVAL: 50 # lessen load in idle
+      # SEED
       SEED: "3421516" # otel
     env_file:
       - ./server/secrets.env
     networks:
-      - minecraft_net
-      - monitoring_net
+      - minecraft
+      - monitoring
     ports:
       - "25565:25565"
     volumes:
       - "./_data/minecraft/data:/data"
+    # Not needed
+    healthcheck:
+      disable: true
     deploy:
       resources:
         limits:
           memory: 3G
 
 networks:
-  minecraft_net:
-    name: "minecraft-net"
+  minecraft:
+    name: "minecraft"
     enable_ipv6: true
-  monitoring_net:
-    name: "monitoring-net"
+  monitoring:
+    name: "monitoring"
     external: true
