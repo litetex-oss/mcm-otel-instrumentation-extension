@@ -26,12 +26,14 @@ services:
       # https://opentelemetry.io/docs/zero-code/java/agent
       # Logs are already received via Docker
       # ProcessResourceProvider is disabled because otherwise the complete command line is sent to the server
+      # Disable OSHI because of libudev spam - it's also not needed
       # Export every 10s so that we see metrics more often
       JVM_OPTS: >-
         -Dotel.service.name=minecraft-ota
         -Dotel.exporter.otlp.endpoint=http://otelc:4318
         -Dotel.logs.exporter=none
         -Dotel.java.disabled.resource.providers=io.opentelemetry.instrumentation.resources.ProcessResourceProvider
+        -Dotel.instrumentation.oshi.enabled=false
         -Dotel.resource.attributes=service.instance.id=mc-docker-server
         -Dotel.metric.export.interval=10000
       ## Server
