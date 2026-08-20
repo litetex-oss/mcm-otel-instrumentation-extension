@@ -44,6 +44,16 @@
         "maven"
       ],
       "allowedVersions": "/^1\\.[0-9]{1,2}(\\.[0-9]{1,2})?\\+build\\.[0-9]{1,2}$/"
+    },
+    {
+      "description": "Spark",
+      "matchPackagePatterns": [
+        "^maven.modrinth:spark"
+      ],
+      "datasources": [
+        "maven"
+      ],
+      "allowedVersions": "!/forge$/"
     }
   ]
 }
