@@ -70,7 +70,7 @@ services:
           memory: 600M
 
   tempo:
-    image: grafana/tempo:2.10.8
+    image: grafana/tempo:3.0.3
     restart: unless-stopped
     user: 0:0
     command: "-target=scalable-single-binary -config.file=/etc/tempo.yml"
