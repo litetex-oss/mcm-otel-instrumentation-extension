@@ -1,0 +1,83 @@
+# https://grafana.com/docs/mimir/latest/configure/configuration-parameters/
+multitenancy_enabled: true
+
+server:
+  http_listen_address: 0.0.0.0
+  http_listen_port: 9009
+  log_level: warn
+
+usage_stats:
+  enabled: false
+
+limits:
+  # Delete metrics after
+  compactor_blocks_retention_period: 30d
+  # Allow metrics to be slightly not ordered
+  out_of_order_time_window: 5m
+
+common:
+  storage:
+    backend: filesystem
+    filesystem:
+      dir: /storage
+
+memberlist:
+  join_members: ["mimir:7951"]
+  dead_node_reclaim_time: 30s
+  gossip_to_dead_nodes_time: 15s
+  left_ingesters_timeout: 30s
+  gossip_interval: 2s
+  # https://github.com/grafana/loki/issues/10172
+  cluster_label: 'mimir'
+  advertise_port: 7951
+  bind_port: 7951
+
+ingester:
+  ring:
+    instance_enable_ipv6: true
+    replication_factor: 1
+    kvstore:
+      store: memberlist
+
+distributor:
+  ring:
+    instance_enable_ipv6: true
+    kvstore:
+      store: memberlist
+
+compactor:
+  sharding_ring:
+    instance_enable_ipv6: true
+    kvstore:
+      store: memberlist
+
+frontend:
+  instance_enable_ipv6: true
+  log_queries_longer_than: 30s
+
+query_scheduler:
+  ring:
+    instance_enable_ipv6: true
+
+store_gateway:
+  sharding_ring:
+    replication_factor: 1
+
+alertmanager:
+  # Effectively disable
+  poll_interval: 60m
+  sharding_ring:
+    replication_factor: 1
+
+blocks_storage:
+  storage_prefix: 'blocks'
+  bucket_store:
+    sync_dir: '/data/tsdb-sync'
+  tsdb:
+    dir: '/data/tsdb'
+
+ruler_storage:
+  storage_prefix: 'ruler'
+
+alertmanager_storage:
+  storage_prefix: 'alertmanager'
