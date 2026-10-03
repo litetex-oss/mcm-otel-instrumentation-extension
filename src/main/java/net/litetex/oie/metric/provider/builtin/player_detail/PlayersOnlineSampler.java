@@ -1,11 +1,13 @@
 package net.litetex.oie.metric.provider.builtin.player_detail;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.mojang.authlib.GameProfile;
 
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
@@ -35,11 +37,12 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 		return this.server.getPlayerList().getPlayers()
 			.stream()
 			.collect(Collectors.toMap(
-				player -> this.playerAttributeCache.computeIfAbsent(
+				player -> forceComputeIfAbsent(
+					this.playerAttributeCache,
 					new AttributeCacheKey(player),
 					key -> Attributes.builder()
-						.put(CommonAttributeKeys.NAME, key.profile().name())
-						.put(CommonAttributeKeys.UUID, key.profile().id().toString())
+						.put(CommonAttributeKeys.NAME, key.profileName())
+						.put(CommonAttributeKeys.UUID, key.profileId().toString())
 						.put(CommonAttributeKeys.WORLD, this.oie().formatWorldName(key.world()))
 						.put(GAME_MODE, key.gameMode().name())
 						.build()
@@ -62,14 +65,42 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 	}
 	
 	protected record AttributeCacheKey(
-		GameProfile profile,
+		String profileName,
+		UUID profileId,
 		ServerLevel world,
 		GameType gameMode
 	)
 	{
 		AttributeCacheKey(final ServerPlayer player)
 		{
-			this(player.getGameProfile(), player.level(), player.gameMode.getGameModeForPlayer());
+			this(
+				// GameProfile is not stable due to changing signatures between logins!
+				// -> Use only needed and stable fields in cache
+				player.getGameProfile().name(),
+				player.getGameProfile().id(),
+				player.level(),
+				player.gameMode.getGameModeForPlayer());
 		}
 	}
+	
+	// Identical to computeIfAbsent forcePuts the value so that it does not crash
+	private static <K, V> V forceComputeIfAbsent(
+		final BiMap<K, V> map,
+		final K key,
+		final Function<? super K, ? extends V> mappingFunction)
+	{
+		Objects.requireNonNull(mappingFunction);
+		final V v;
+		if((v = map.get(key)) == null)
+		{
+			final V newValue;
+			if((newValue = mappingFunction.apply(key)) != null)
+			{
+				map.forcePut(key, newValue);
+				return newValue;
+			}
+		}
+		return v;
+	}
+	
 }
