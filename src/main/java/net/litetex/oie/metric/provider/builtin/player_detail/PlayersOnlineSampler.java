@@ -83,7 +83,7 @@ public class PlayersOnlineSampler extends PausableNullSettingMetricSampler<Long,
 		}
 	}
 	
-	// Identical to computeIfAbsent forcePuts the value so that it does not crash
+	// Identical to computeIfAbsent but forcePuts the value so that it does not crash when already present
 	private static <K, V> V forceComputeIfAbsent(
 		final BiMap<K, V> map,
 		final K key,
