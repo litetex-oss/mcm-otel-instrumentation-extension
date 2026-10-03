@@ -1,3 +1,6 @@
+# 2.2.1
+* Fixed an error in `PlayersOnlineSampler` that could happen when players quickly joined and left the server
+
 # 2.2.0
 * Updated to 26.3
 
