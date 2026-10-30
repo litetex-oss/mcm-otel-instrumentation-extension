@@ -1,0 +1,63 @@
+# See also
+# https://github.com/grafana/tempo/tree/main/example/docker-compose
+# https://grafana.com/docs/tempo/latest/configuration/
+# https://grafana.com/docs/tempo/latest/configuration/manifest/
+# https://grafana.com/docs/tempo/latest/configuration/network/ipv6/
+
+stream_over_http_enabled: true
+multitenancy_enabled: true
+
+usage_report:
+  reporting_enabled: false
+
+server:
+  # Default ports:
+  # HTTP 80
+  # gRPC 9095
+  http_listen_address: '::0'
+  grpc_listen_address: '::0'
+  log_level: warn
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        # Default ports:
+        # HTTP 4318 
+        # gRPC 4317
+        http:
+          endpoint: '[::0]:4318'
+        grpc:
+          endpoint: '[::0]:4317'
+
+ingester:
+  lifecycler:
+    address: '::'
+    enable_inet6: true
+
+memberlist:
+  bind_addr:
+    - '::'
+  join_members: [tempo:7952]
+  # https://github.com/grafana/loki/issues/10172
+  cluster_label: 'tempo'
+  bind_port: 7952
+
+storage:
+  trace:
+    backend: local
+    local:
+      path: /storage
+    wal:
+      path: /data/tempo/wal
+
+# Note: By default retention=14d 
+compactor:
+  ring:
+    kvstore:
+      store: memberlist
+    enable_inet6: true
+
+querier:
+  frontend_worker:
+    frontend_address: tempo:9095

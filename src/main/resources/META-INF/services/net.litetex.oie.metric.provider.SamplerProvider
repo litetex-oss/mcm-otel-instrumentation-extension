@@ -1,0 +1,3 @@
+net.litetex.oie.metric.provider.builtin.BuiltinSamplerProvider
+net.litetex.oie.metric.provider.builtin.player_detail.BuiltInPlayerDetailSamplerProvider
+net.litetex.oie.metric.provider.spark.SparkSamplerProvider
